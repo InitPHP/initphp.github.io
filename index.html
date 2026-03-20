@@ -1,433 +1,1448 @@
 <!DOCTYPE html>
-<html lang="tr">
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title>InitPHP Project | Open Source PHP Software Community</title>
-        <meta name="description" content="InitPHP is a project that open source develops and publishes various modules/libraries from which you can build large or small structures.">
-        <meta name="author" content="Muhammet ŞAFAK" />
-        <link rel="stylesheet" href="assets/fontawesome/css/all.min.css">
-        <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
-        <style type="text/css">
-            a{text-decoration:none}a:hover{color:#353739}.btn-primary{color:#fff;background-color:#8792BF;border-color:#939ec9}.btn-primary:hover{color:#fff;background-color:#8692c5;border-color:#939ec9}.btn-outline-primary{color:#8792BF;border-color:#8792BF}.btn-outline-primary:hover{color:#fff;background-color:#8792BF;border-color:#939ec9}.navbar .container a.navbar-brand strong{margin-right:10px}footer a{color:#6c757d;font-weight:700}.bd-placeholder-img{font-size:1.125rem;text-anchor:middle;-webkit-user-select:none;-moz-user-select:none;user-select:none}@media (min-width:768px){.bd-placeholder-img-lg{font-size:3.5rem}}
-        </style>
-    </head>
-    <body>
-        <header>
-            <div class="collapse bg-dark" id="navbarHeader">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-sm-8 col-md-7 py-4">
-                            <h4 class="text-white">About</h4>
-                            <p class="text-muted">
-                                <span class="text-white">InitPHP project</span>; It is a parent group project that publishes open source, standalone PHP libraries. It started to be developed by <a href="https://github.com/muhammetsafak" class="text-muted">Muhammet ŞAFAK</a> in 2021 in order to provide simple, fast and advanced transactions.
-                            </p>
-                        </div>
-                        <div class="col-sm-4 offset-md-1 py-4">
-                            <h4 class="text-white">Follow Developer</h4>
-                            <ul class="list-unstyled">
-                                <li>
-                                    <a href="https://www.linkedin.com/in/muhametsafak/" title="LinkedIn" target="_blank" class="text-white"><i class="fa-brands fa-linkedin-in"></i> @muhametsafak</a>
-                                </li>
-                                <li>
-                                    <a href="https://github.com/muhammetsafak" title="Github" target="_blank" class="text-white"><i class="fa-brands fa-github"></i> @muhammetsafak</a>
-                                </li>
-                                <li>
-                                    <a href="https://twitter.com/muhametsafak" title="Twitter" target="_blank" class="text-white"><i class="fa-brands fa-twitter"></i> @muhametsafak</a>
-                                </li>
-                                <li>
-                                    <a href="https://medium.com/@muhametsafak" title="Medium" target="_blank" class="text-white"><i class="fa-brands fa-medium"></i> @muhametsafak</a>
-                                </li>
-                                <li>
-                                    <a href="mailto:info@muhammetsafak.com.tr" title="E-Mail" class="text-white"><i class="fa-solid fa-envelope"></i> info@muhammetsafak.com.tr</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="navbar navbar-dark bg-dark shadow-sm">
-                <div class="container">
-                    <a href="#" class="navbar-brand d-flex align-items-center">
-                        <strong>__InitPHP </strong> Project
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>InitPHP - Open Source PHP Libraries & Components</title>
+    <meta name="description" content="InitPHP is an open source project providing modular, standalone PHP libraries for database, routing, caching, encryption, sockets, and more. Build robust PHP applications with lightweight, well-tested components.">
+    <meta name="keywords" content="PHP, open source, PHP libraries, PHP components, database, router, ORM, cache, encryption, socket, PSR, PHP framework">
+    <meta name="author" content="Muhammet SAFAK">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://initphp.org/">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://initphp.org/">
+    <meta property="og:title" content="InitPHP - Open Source PHP Libraries & Components">
+    <meta property="og:description" content="Modular, standalone PHP libraries for database, routing, caching, encryption, sockets, and more. Build robust PHP applications with lightweight, well-tested components.">
+    <meta property="og:image" content="https://initphp.org/logos/initphp-icon-700.png">
+    <meta property="og:site_name" content="InitPHP">
+    <meta property="og:locale" content="en_US">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="InitPHP - Open Source PHP Libraries & Components">
+    <meta name="twitter:description" content="Modular, standalone PHP libraries for database, routing, caching, encryption, sockets, and more.">
+    <meta name="twitter:image" content="https://initphp.org/logos/initphp-icon-700.png">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="logos/initphp-icon-700.png">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="assets/fontawesome/css/all.min.css">
+
+    <!-- Schema.org -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "InitPHP",
+        "url": "https://initphp.org",
+        "logo": "https://initphp.org/logos/initphp-icon-700.png",
+        "description": "InitPHP is an open source project providing modular, standalone PHP libraries for database, routing, caching, encryption, sockets, and more.",
+        "foundingDate": "2021",
+        "founder": {
+            "@type": "Person",
+            "name": "Muhammet SAFAK",
+            "url": "https://github.com/muhammetsafak"
+        },
+        "sameAs": [
+            "https://github.com/InitPHP"
+        ]
+    }
+    </script>
+
+    <style>
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #0a0e17;
+            --bg-secondary: #111827;
+            --bg-card: #1a2236;
+            --bg-card-hover: #1f2a42;
+            --text-primary: #e2e8f0;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --accent: #7c6ef0;
+            --accent-light: #9d91f5;
+            --accent-glow: rgba(124, 110, 240, 0.15);
+            --php-blue: #4f8cc9;
+            --green: #34d399;
+            --border: rgba(148, 163, 184, 0.1);
+            --radius: 12px;
+            --radius-sm: 8px;
+            --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            --mono: 'JetBrains Mono', 'Fira Code', monospace;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        a {
+            color: var(--accent-light);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        a:hover {
+            color: #c4bbfa;
+        }
+
+        /* ===== NAVBAR ===== */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            background: rgba(10, 14, 23, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            padding: 0 1.5rem;
+            height: 64px;
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: var(--text-primary) !important;
+        }
+
+        .navbar-brand img {
+            width: 32px;
+            height: 32px;
+            border-radius: 6px;
+        }
+
+        .navbar-brand span {
+            color: var(--accent-light);
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--text-primary);
+        }
+
+        .nav-github {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 16px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            color: var(--text-primary) !important;
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: background 0.2s, border-color 0.2s;
+        }
+
+        .nav-github:hover {
+            background: var(--bg-card-hover);
+            border-color: var(--accent);
+        }
+
+        .mobile-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* ===== HERO ===== */
+        .hero {
+            padding: 10rem 1.5rem 6rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .hero-content {
+            max-width: 780px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 16px;
+            background: var(--accent-glow);
+            border: 1px solid rgba(124, 110, 240, 0.25);
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--accent-light);
+            margin-bottom: 2rem;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.02em;
+        }
+
+        .hero h1 .gradient-text {
+            background: linear-gradient(135deg, var(--accent-light) 0%, var(--php-blue) 50%, var(--green) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-desc {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 2.5rem;
+            line-height: 1.7;
+        }
+
+        .hero-actions {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            border-radius: var(--radius-sm);
+            font-size: 0.95rem;
+            font-weight: 600;
+            font-family: var(--font);
+            cursor: pointer;
+            border: none;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: #fff;
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-light);
+            color: #fff;
+            transform: translateY(-1px);
+            box-shadow: 0 8px 30px rgba(124, 110, 240, 0.3);
+        }
+
+        .btn-secondary {
+            background: var(--bg-card);
+            color: var(--text-primary);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            background: var(--bg-card-hover);
+            border-color: var(--accent);
+            color: var(--text-primary);
+            transform: translateY(-1px);
+        }
+
+        /* ===== STATS ===== */
+        .stats {
+            padding: 0 1.5rem 5rem;
+        }
+
+        .stats-grid {
+            max-width: 800px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+
+        .stat-card {
+            text-align: center;
+            padding: 2rem 1rem;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--accent-light);
+            font-family: var(--mono);
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-top: 0.25rem;
+            font-weight: 500;
+        }
+
+        /* ===== SECTION COMMON ===== */
+        .section {
+            padding: 5rem 1.5rem;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 3.5rem;
+        }
+
+        .section-header h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            letter-spacing: -0.01em;
+        }
+
+        .section-header p {
+            color: var(--text-secondary);
+            max-width: 550px;
+            margin: 0 auto;
+        }
+
+        /* ===== FEATURED ===== */
+        .featured {
+            background: var(--bg-secondary);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .featured-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .featured-card {
+            position: relative;
+            padding: 2rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            transition: border-color 0.3s, transform 0.2s, box-shadow 0.3s;
+        }
+
+        .featured-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .featured-card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+
+        .featured-card-name {
+            font-size: 1.2rem;
+            font-weight: 700;
+            font-family: var(--mono);
+            color: var(--text-primary);
+        }
+
+        .featured-card-stars {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            color: #fbbf24;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .featured-card p {
+            color: var(--text-secondary);
+            font-size: 0.92rem;
+            line-height: 1.6;
+            margin-bottom: 1.25rem;
+        }
+
+        .featured-card-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 4px 10px;
+            background: rgba(79, 140, 201, 0.12);
+            color: var(--php-blue);
+            font-size: 0.75rem;
+            font-weight: 600;
+            border-radius: 50px;
+            font-family: var(--mono);
+        }
+
+        .featured-card-links {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .featured-card-links a {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .featured-card-links a:hover {
+            color: var(--accent-light);
+        }
+
+        /* ===== ALL LIBRARIES ===== */
+        .libraries-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1rem;
+        }
+
+        .lib-card {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1.25rem 1.5rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            transition: border-color 0.2s, transform 0.2s;
+            color: var(--text-primary);
+        }
+
+        .lib-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-2px);
+            color: var(--text-primary);
+        }
+
+        .lib-card .lib-icon {
+            font-size: 1.5rem;
+            color: var(--accent);
+            width: 32px;
+            text-align: center;
+            flex-shrink: 0;
+        }
+
+        .lib-card .lib-info {
+            min-width: 0;
+        }
+
+        .lib-card .lib-name {
+            font-weight: 600;
+            font-size: 0.95rem;
+            font-family: var(--mono);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .lib-card .lib-desc {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* ===== CATEGORIES ===== */
+        .categories {
+            background: var(--bg-secondary);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .categories-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .category-card {
+            padding: 2rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+        }
+
+        .category-icon {
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--accent-glow);
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            font-size: 1.25rem;
+            color: var(--accent-light);
+        }
+
+        .category-card h3 {
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .category-card p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        .category-list {
+            list-style: none;
+            margin-top: 1rem;
+        }
+
+        .category-list li {
+            padding: 0.3rem 0;
+        }
+
+        .category-list a {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            font-family: var(--mono);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .category-list a::before {
+            content: '';
+            width: 4px;
+            height: 4px;
+            background: var(--accent);
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .category-list a:hover {
+            color: var(--accent-light);
+        }
+
+        /* ===== INSTALL SECTION ===== */
+        .install {
+            text-align: center;
+        }
+
+        .install-box {
+            max-width: 600px;
+            margin: 0 auto;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            overflow: hidden;
+        }
+
+        .install-box-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 20px;
+            background: var(--bg-card);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .install-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+
+        .install-dot:nth-child(1) { background: #ef4444; }
+        .install-dot:nth-child(2) { background: #f59e0b; }
+        .install-dot:nth-child(3) { background: #22c55e; }
+
+        .install-box-header span {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-left: auto;
+            font-family: var(--mono);
+        }
+
+        .install-box-body {
+            padding: 1.5rem 2rem;
+            text-align: left;
+        }
+
+        .install-box-body code {
+            font-family: var(--mono);
+            font-size: 0.95rem;
+            color: var(--green);
+        }
+
+        .install-box-body .cmd-prefix {
+            color: var(--text-muted);
+            user-select: none;
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            padding: 3rem 1.5rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .footer-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .footer-left {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .footer-brand {
+            font-weight: 700;
+            color: var(--text-primary) !important;
+            font-size: 1.05rem;
+        }
+
+        .footer-copy {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .footer-links a {
+            color: var(--text-muted);
+            font-size: 1.15rem;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent-light);
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 64px;
+                left: 0;
+                right: 0;
+                flex-direction: column;
+                background: rgba(10, 14, 23, 0.97);
+                backdrop-filter: blur(20px);
+                padding: 1.5rem;
+                gap: 1rem;
+                border-bottom: 1px solid var(--border);
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .mobile-toggle {
+                display: block;
+            }
+
+            .hero {
+                padding: 8rem 1.5rem 4rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 0.75rem;
+            }
+
+            .stat-card {
+                padding: 1.25rem 0.5rem;
+            }
+
+            .stat-number {
+                font-size: 1.75rem;
+            }
+
+            .featured-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .libraries-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .categories-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-inner {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .footer-left {
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero-desc {
+                font-size: 1rem;
+            }
+
+            .hero-actions {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        /* ===== VIEW ALL LINK ===== */
+        .view-all {
+            text-align: center;
+            margin-top: 3rem;
+        }
+
+        .view-all a {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--accent-light);
+            font-weight: 600;
+            font-size: 0.95rem;
+            padding: 12px 28px;
+            border: 1px solid var(--accent);
+            border-radius: var(--radius-sm);
+            transition: all 0.2s;
+        }
+
+        .view-all a:hover {
+            background: var(--accent);
+            color: #fff;
+        }
+
+        /* ===== SCROLL TOP ===== */
+        .scroll-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 44px;
+            height: 44px;
+            background: var(--accent);
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            font-size: 1.1rem;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s, transform 0.2s;
+            z-index: 50;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .scroll-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .scroll-top:hover {
+            transform: translateY(-3px);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar" role="navigation" aria-label="Main navigation">
+        <div class="navbar-inner">
+            <a href="/" class="navbar-brand" aria-label="InitPHP Home">
+                <img src="logos/initphp-icon-700.png" alt="InitPHP Logo" width="32" height="32">
+                <span>Init</span>PHP
+            </a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#libraries">Libraries</a></li>
+                <li><a href="#categories">Categories</a></li>
+                <li><a href="#install">Install</a></li>
+                <li>
+                    <a href="https://github.com/InitPHP" target="_blank" rel="noopener noreferrer" class="nav-github">
+                        <i class="fa-brands fa-github"></i> GitHub
                     </a>
-                    <button
-                        class="navbar-toggler"
-                        type="button"
-                        data-bs-toggle="collapse"
-                        data-bs-target="#navbarHeader"
-                        aria-controls="navbarHeader"
-                        aria-expanded="false"
-                        aria-label="Toggle navigation"
-                    >
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                </div>
-            </div>
-        </header>
+                </li>
+            </ul>
+            <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle menu" aria-expanded="false">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+        </div>
+    </nav>
 
-        <main>
-            <section class="py-5 text-center container">
-                <div class="row py-lg-5">
-                    <div class="col-lg-6 col-md-8 mx-auto">
-                        <h1 class="fw-light">Open Source <i class="fa-brands fa-php"></i> Libraries</h1>
-                        <p class="lead text-muted">
-                            InitPHP is a project that open source develops and publishes various modules/libraries from which you can build large or small structures.
-                        </p>
-                        <p>
-                            <a href="https://github.com/InitPHP" target="_blank" class="btn btn-primary my-2"><i class="fa-brands fa-github"></i> View on Github.com</a>
-                            <a href="https://blog.initphp.org" target="_blank" class="btn btn-secondary my-2"><i class="fa-brands fa-blogger"></i> Developer Blog</a>
-                        </p>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-badge">
+                <i class="fa-brands fa-php"></i> Open Source PHP Ecosystem
+            </div>
+            <h1>
+                Build with<br>
+                <span class="gradient-text">Modular PHP Libraries</span>
+            </h1>
+            <p class="hero-desc">
+                A collection of 39+ lightweight, standalone PHP libraries.
+                From database ORM to socket servers, each component is designed to work
+                independently or together.
+            </p>
+            <div class="hero-actions">
+                <a href="https://github.com/InitPHP" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+                    <i class="fa-brands fa-github"></i> Explore on GitHub
+                </a>
+                <a href="#libraries" class="btn btn-secondary">
+                    <i class="fa-solid fa-grid-2"></i> Browse Libraries
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats -->
+    <section class="stats" aria-label="Project statistics">
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number">39+</div>
+                <div class="stat-label">Libraries</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">MIT</div>
+                <div class="stat-label">License</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">PSR</div>
+                <div class="stat-label">Standards</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Libraries -->
+    <section class="section featured" id="libraries">
+        <div class="section-header">
+            <h2>Featured Libraries</h2>
+            <p>Most popular and actively maintained components in the InitPHP ecosystem.</p>
+        </div>
+        <div class="featured-grid">
+            <article class="featured-card">
+                <div class="featured-card-header">
+                    <span class="featured-card-name">Socket</span>
+                    <span class="featured-card-stars"><i class="fa-solid fa-star"></i> 10</span>
+                </div>
+                <p>PHP Socket (TCP, TLS, UDP, SSL) Server/Client Library. Build real-time applications with low-level network communication.</p>
+                <div class="featured-card-footer">
+                    <span class="tag">PHP 7.4+</span>
+                    <div class="featured-card-links">
+                        <a href="https://github.com/InitPHP/Socket" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-github"></i> Code</a>
+                        <a href="https://github.com/InitPHP/Socket/wiki" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-book"></i> Docs</a>
                     </div>
                 </div>
-            </section>
+            </article>
 
-            <div class="album py-5 bg-light">
-                <div class="container">
-                    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-                        <div class="col">
-                            <div class="card shadow-sm">
-                                <img src="assets/img/initphp-database.jpg" class="bd-placeholder-img card-img-top" alt="InitPHP Database">
-                                <div class="card-body">
-                                    <p class="card-text">
-                                        Manage your database with or without abstraction. This library is built on the PHP PDO plugin and is mainly used to build and execute SQL queries.
-                                    </p>
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <div class="btn-group">
-                                            <a href="https://github.com/InitPHP/Database" title="Database Project" target="_blank" class="btn btn-sm btn-outline-secondary">
-                                                <i class="fa-brands fa-github-alt"></i> View on Github
-                                            </a>
-                                            <a href="https://github.com/InitPHP/Database/wiki" title="Database Project Document" target="_blank" class="btn btn-sm btn-outline-secondary">
-                                                <i class="fa-solid fa-book"></i> Document
-                                            </a>
-                                        </div>
-                                        <small class="text-muted">PHP 7.4</small>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="card shadow-sm">
-                                <img src="assets/img/initphp-router.jpg" class="bd-placeholder-img card-img-top" alt="InitPHP Router">
-                                <div class="card-body">
-                                    <p class="card-text">
-                                        This is an open source library that lets you create and manage advanced routes for HTTP requests.
-                                    </p>
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <div class="btn-group">
-                                            <a href="https://github.com/InitPHP/Router" title="Router Project" target="_blank" class="btn btn-sm btn-outline-secondary">
-                                                <i class="fa-brands fa-github-alt"></i> View on Github
-                                            </a>
-                                            <a href="https://github.com/InitPHP/Router/wiki" title="Router Project Document" target="_blank" class="btn btn-sm btn-outline-secondary">
-                                                <i class="fa-solid fa-book"></i> Document
-                                            </a>
-                                        </div>
-                                        <small class="text-muted">PHP 7.4</small>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="card shadow-sm">
-                                <img src="assets/img/initphp-validation.jpg" class="bd-placeholder-img card-img-top" alt="InitPHP Validation">
-                                <div class="card-body">
-                                    <p class="card-text">
-                                        Simple and fast library for verifying that the data is of the type and structure you want.
-                                    </p>
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <div class="btn-group">
-                                            <a href="https://github.com/InitPHP/Validation" title="Validation Project" target="_blank" class="btn btn-sm btn-outline-secondary">
-                                                <i class="fa-brands fa-github-alt"></i> View on Github
-                                            </a>
-                                            <a href="https://github.com/InitPHP/Validation/wiki" title="Validation Project Document" target="_blank" class="btn btn-sm btn-outline-secondary">
-                                                <i class="fa-solid fa-book"></i> Document
-                                            </a>
-                                        </div>
-                                        <small class="text-muted">PHP 7.4</small>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="col">
-                            <div class="card shadow-sm">
-                                <img src="assets/img/initphp-mailer.jpg" class="bd-placeholder-img card-img-top" alt="InitPHP Mailer">
-                                <div class="card-body">
-                                    <p class="card-text">
-                                        It is a simple easy to use library for sending mail.
-                                    </p>
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <div class="btn-group">
-                                            <a href="https://github.com/InitPHP/Mailer" title="Mailer Project" target="_blank" class="btn btn-sm btn-outline-secondary">
-                                                <i class="fa-brands fa-github-alt"></i> View on Github
-                                            </a>
-                                            <a href="https://github.com/InitPHP/Mailer/wiki" title="Mailer Project Document" target="_blank" class="btn btn-sm btn-outline-secondary">
-                                                <i class="fa-solid fa-book"></i> Document
-                                            </a>
-                                        </div>
-                                        <small class="text-muted">PHP 7.4</small>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="card shadow-sm">
-                                <img src="assets/img/initphp-curl.jpg" class="bd-placeholder-img card-img-top" alt="InitPHP Curl">
-                                <div class="card-body">
-                                    <p class="card-text">
-                                        Curl library to help you make advanced HTTP requests with PHP.
-                                    </p>
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <div class="btn-group">
-                                            <a href="https://github.com/InitPHP/Curl" title="Curl Project" target="_blank" class="btn btn-sm btn-outline-secondary">
-                                                <i class="fa-brands fa-github-alt"></i> View on Github
-                                            </a>
-                                            <a href="https://github.com/InitPHP/Curl/wiki" title="Curl Project Document" target="_blank" class="btn btn-sm btn-outline-secondary">
-                                                <i class="fa-solid fa-book"></i> Document
-                                            </a>
-                                        </div>
-                                        <small class="text-muted">PHP 7.4</small>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="card shadow-sm">
-                                <img src="assets/img/initphp-events.jpg" class="bd-placeholder-img card-img-top" alt="InitPHP Events">
-                                <div class="card-body">
-                                    <p class="card-text">
-                                        It allows you to run functions from outside in different places within your software. 
-                                    </p>
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <div class="btn-group">
-                                            <a href="https://github.com/InitPHP/Events" title="Events Project" target="_blank" class="btn btn-sm btn-outline-secondary">
-                                                <i class="fa-brands fa-github-alt"></i> View on Github
-                                            </a>
-                                            <a href="https://github.com/InitPHP/Events/wiki" title="Events Project Document" target="_blank" class="btn btn-sm btn-outline-secondary">
-                                                <i class="fa-solid fa-book"></i> Document
-                                            </a>
-                                        </div>
-                                        <small class="text-muted">PHP 7.4</small>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="col">
-                            <div class="card shadow-sm">
-                                <img src="assets/img/initphp-socket.jpg" class="bd-placeholder-img card-img-top" alt="InitPHP Socket">
-                                <div class="card-body">
-                                    <p class="card-text">
-                                        PHP Socket (TCP, TLS, UDP, SSL) Server/Client Library
-                                    </p>
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <div class="btn-group">
-                                            <a href="https://github.com/InitPHP/Socket" title="Socket Project" target="_blank" class="btn btn-sm btn-outline-secondary">
-                                                <i class="fa-brands fa-github-alt"></i> View on Github
-                                            </a>
-                                            <a href="https://github.com/InitPHP/Socket/wiki" title="Socket Project Document" target="_blank" class="btn btn-sm btn-outline-secondary">
-                                                <i class="fa-solid fa-book"></i> Document
-                                            </a>
-                                        </div>
-                                        <small class="text-muted">PHP 7.4</small>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="card shadow-sm">
-                                <img src="assets/img/initphp-cache.jpg" class="bd-placeholder-img card-img-top" alt="InitPHP Cache">
-                                <div class="card-body">
-                                    <p class="card-text">
-                                        PSR-16 is a simple caching library that uses the Simple Cache interface.
-                                    </p>
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <div class="btn-group">
-                                            <a href="https://github.com/InitPHP/Cache" title="Cache Project" target="_blank" class="btn btn-sm btn-outline-secondary">
-                                                <i class="fa-brands fa-github-alt"></i> View on Github
-                                            </a>
-                                            <a href="https://github.com/InitPHP/Cache/wiki" title="Cache Project Document" target="_blank" class="btn btn-sm btn-outline-secondary">
-                                                <i class="fa-solid fa-book"></i> Document
-                                            </a>
-                                        </div>
-                                        <small class="text-muted">PHP 5.6</small>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="card shadow-sm">
-                                <img src="assets/img/initphp-encryption.jpg" class="bd-placeholder-img card-img-top" alt="InitPHP Encryption">
-                                <div class="card-body">
-                                    <p class="card-text">
-                                        PHP OpenSSL/Sodium Encryption and Decryption
-                                    </p>
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <div class="btn-group">
-                                            <a href="https://github.com/InitPHP/Encryption" title="Encryption Project" target="_blank" class="btn btn-sm btn-outline-secondary">
-                                                <i class="fa-brands fa-github-alt"></i> View on Github
-                                            </a>
-                                            <a href="https://github.com/InitPHP/Encryption/wiki" title="Encryption Project Document" target="_blank" class="btn btn-sm btn-outline-secondary">
-                                                <i class="fa-solid fa-book"></i> Document
-                                            </a>
-                                        </div>
-                                        <small class="text-muted">PHP 7.4</small>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="col">
-                            <div class="card shadow-sm">
-                                <img src="assets/img/initphp-performance-meter.jpg" class="bd-placeholder-img card-img-top" alt="InitPHP Performance Meter">
-                                <div class="card-body">
-                                    <p class="card-text">
-                                        A helpful library that allows you to measure and compare the runtime of the code you write with PHP.
-                                    </p>
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <div class="btn-group">
-                                            <a href="https://github.com/InitPHP/PerformanceMeter" title="Performance Meter Project" target="_blank" class="btn btn-sm btn-outline-secondary">
-                                                <i class="fa-brands fa-github-alt"></i> View on Github
-                                            </a>
-                                            <a href="https://github.com/InitPHP/PerformanceMeter/wiki" title="Performance Meter Project Document" target="_blank" class="btn btn-sm btn-outline-secondary">
-                                                <i class="fa-solid fa-book"></i> Document
-                                            </a>
-                                        </div>
-                                        <small class="text-muted">PHP 7.4</small>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="card shadow-sm">
-                                <img src="assets/img/initphp-config.jpg" class="bd-placeholder-img card-img-top" alt="InitPHP Config">
-                                <div class="card-body">
-                                    <p class="card-text">
-                                        Advanced configuration manager library.
-                                    </p>
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <div class="btn-group">
-                                            <a href="https://github.com/InitPHP/Config" title="Config Project" target="_blank" class="btn btn-sm btn-outline-secondary">
-                                                <i class="fa-brands fa-github-alt"></i> View on Github
-                                            </a>
-                                            <a href="https://github.com/InitPHP/Config/wiki" title="Config Project Document" target="_blank" class="btn btn-sm btn-outline-secondary">
-                                                <i class="fa-solid fa-book"></i> Document
-                                            </a>
-                                        </div>
-                                        <small class="text-muted">PHP 7.4</small>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="card shadow-sm">
-                                <img src="assets/img/initphp-dotenv.jpg" class="bd-placeholder-img card-img-top" alt="InitPHP DotENV">
-                                <div class="card-body">
-                                    <p class="card-text">
-                                        Loads environment variables from <code>.env</code> or <code>.env.php</code> file.
-                                    </p>
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <div class="btn-group">
-                                            <a href="https://github.com/InitPHP/DotENV" title="DotENV Project" target="_blank" class="btn btn-sm btn-outline-secondary">
-                                                <i class="fa-brands fa-github-alt"></i> View on Github
-                                            </a>
-                                            <a href="https://github.com/InitPHP/DotENV/wiki" title="DotENV Project Document" target="_blank" class="btn btn-sm btn-outline-secondary">
-                                                <i class="fa-solid fa-book"></i> Document
-                                            </a>
-                                        </div>
-                                        <small class="text-muted">PHP 7.4</small>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="col">
-                            <div class="card shadow-sm">
-                                <img src="assets/img/initphp-logger.jpg" class="bd-placeholder-img card-img-top" alt="InitPHP Logger">
-                                <div class="card-body">
-                                    <p class="card-text">
-                                        Logger class in accordance with PSR-3 standards
-                                    </p>
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <div class="btn-group">
-                                            <a href="https://github.com/InitPHP/Logger" title="Logger Project" target="_blank" class="btn btn-sm btn-outline-secondary">
-                                                <i class="fa-brands fa-github-alt"></i> View on Github
-                                            </a>
-                                            <a href="https://github.com/InitPHP/Logger/wiki" title="Logger Project Document" target="_blank" class="btn btn-sm btn-outline-secondary">
-                                                <i class="fa-solid fa-book"></i> Document
-                                            </a>
-                                        </div>
-                                        <small class="text-muted">PHP 5.6</small>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="card shadow-sm">
-                                <img src="assets/img/initphp-translator.jpg" class="bd-placeholder-img card-img-top" alt="InitPHP Translator">
-                                <div class="card-body">
-                                    <p class="card-text">
-                                        This library; It is a micro library that will allow you to add multi-language support to your projects or libraries.
-                                    </p>
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <div class="btn-group">
-                                            <a href="https://github.com/InitPHP/Translator" title="Translator Project" target="_blank" class="btn btn-sm btn-outline-secondary">
-                                                <i class="fa-brands fa-github-alt"></i> View on Github
-                                            </a>
-                                            <a href="https://github.com/InitPHP/Translator/wiki" title="Translator Project Document" target="_blank" class="btn btn-sm btn-outline-secondary">
-                                                <i class="fa-solid fa-book"></i> Document
-                                            </a>
-                                        </div>
-                                        <small class="text-muted">PHP 7.4</small>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="card shadow-sm">
-                                <img src="assets/img/initphp-parameterbag.jpg" class="bd-placeholder-img card-img-top" alt="InitPHP Parameter Bag">
-                                <div class="card-body">
-                                    <p class="card-text">
-                                        Single and multi-dimensional parameter bag.
-                                    </p>
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <div class="btn-group">
-                                            <a href="https://github.com/InitPHP/ParameterBag" title="Parameter Bag Project" target="_blank" class="btn btn-sm btn-outline-secondary">
-                                                <i class="fa-brands fa-github-alt"></i> View on Github
-                                            </a>
-                                            <a href="https://github.com/InitPHP/ParameterBag/wiki" title="Parameter Bag Project Document" target="_blank" class="btn btn-sm btn-outline-secondary">
-                                                <i class="fa-solid fa-book"></i> Document
-                                            </a>
-                                        </div>
-                                        <small class="text-muted">PHP 7.4</small>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row pt-4">
-                        <div class="text-center">
-                            <a class="btn btn-outline-primary btn-lg" href="https://github.com/orgs/InitPHP/repositories?q=&type=public&language=&sort=" target="_blank" title="All Projects and Libraries">All Projects and Libraries</a>
-                        </div>
+            <article class="featured-card">
+                <div class="featured-card-header">
+                    <span class="featured-card-name">Database</span>
+                    <span class="featured-card-stars"><i class="fa-solid fa-star"></i> 6</span>
+                </div>
+                <p>Full-featured database toolkit with DBAL, Data Mapper, Query Builder, and ORM. Built on PHP PDO for MySQL, SQLite, and more.</p>
+                <div class="featured-card-footer">
+                    <span class="tag">PHP 7.4+</span>
+                    <div class="featured-card-links">
+                        <a href="https://github.com/InitPHP/Database" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-github"></i> Code</a>
+                        <a href="https://github.com/InitPHP/Database/wiki" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-book"></i> Docs</a>
                     </div>
                 </div>
-            </div>
-        </main>
+            </article>
 
-        <footer class="text-muted py-5">
-            <div class="container">
-                <p class="float-end mb-1">
-                    <a href="#"><i class="fa-solid fa-arrow-up"></i> Back to top</a>
-                </p>
-                <p class="mb-1">
-                    Copyright &copy; 2022 InitPHP Project. It is distributed under the <a href="./license.txt" target="_blank">MIT License</a>. 
-                </p>
-                <p class="mb-0">
-                    The InitPHP project is maintained by <a href="https://www.muhammetsafak.com.tr" target="_blank" title="Senior PHP Developer"><i class="fa-solid fa-terminal"></i> Muhammet ŞAFAK</a>
-                </p>
-            </div>
-        </footer>
+            <article class="featured-card">
+                <div class="featured-card-header">
+                    <span class="featured-card-name">Events</span>
+                    <span class="featured-card-stars"><i class="fa-solid fa-star"></i> 6</span>
+                </div>
+                <p>Powerful event system to hook into your application flow. Useful constructs for building extensible, plugin-based architectures.</p>
+                <div class="featured-card-footer">
+                    <span class="tag">PHP 7.4+</span>
+                    <div class="featured-card-links">
+                        <a href="https://github.com/InitPHP/Events" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-github"></i> Code</a>
+                        <a href="https://github.com/InitPHP/Events/wiki" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-book"></i> Docs</a>
+                    </div>
+                </div>
+            </article>
 
-        <script src="assets/js/bootstrap.bundle.min.js"></script>
-    </body>
+            <article class="featured-card">
+                <div class="featured-card-header">
+                    <span class="featured-card-name">FiberLoops</span>
+                    <span class="featured-card-stars"><i class="fa-solid fa-star"></i> 6</span>
+                </div>
+                <p>Async-style concurrent programming with PHP Fibers. Run multiple tasks cooperatively without threads.</p>
+                <div class="featured-card-footer">
+                    <span class="tag">PHP 8.1+</span>
+                    <div class="featured-card-links">
+                        <a href="https://github.com/InitPHP/FiberLoops" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-github"></i> Code</a>
+                    </div>
+                </div>
+            </article>
+
+            <article class="featured-card">
+                <div class="featured-card-header">
+                    <span class="featured-card-name">Router</span>
+                    <span class="featured-card-stars"><i class="fa-solid fa-star"></i> 3</span>
+                </div>
+                <p>Create and manage advanced routes for HTTP requests with groups, middleware, and named routes.</p>
+                <div class="featured-card-footer">
+                    <span class="tag">PHP 7.4+</span>
+                    <div class="featured-card-links">
+                        <a href="https://github.com/InitPHP/Router" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-github"></i> Code</a>
+                        <a href="https://github.com/InitPHP/Router/wiki" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-book"></i> Docs</a>
+                    </div>
+                </div>
+            </article>
+
+            <article class="featured-card">
+                <div class="featured-card-header">
+                    <span class="featured-card-name">Translator</span>
+                    <span class="featured-card-stars"><i class="fa-solid fa-star"></i> 3</span>
+                </div>
+                <p>Micro library to add multi-language support to your projects. Lightweight and easy to integrate.</p>
+                <div class="featured-card-footer">
+                    <span class="tag">PHP 7.4+</span>
+                    <div class="featured-card-links">
+                        <a href="https://github.com/InitPHP/Translator" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-github"></i> Code</a>
+                        <a href="https://github.com/InitPHP/Translator/wiki" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-book"></i> Docs</a>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <!-- Categories -->
+    <section class="section categories" id="categories">
+        <div class="section-header">
+            <h2>Explore by Category</h2>
+            <p>Find the right library for your needs, organized by functionality.</p>
+        </div>
+        <div class="categories-grid">
+            <div class="category-card">
+                <div class="category-icon"><i class="fa-solid fa-database"></i></div>
+                <h3>Database & Storage</h3>
+                <p>ORM, query building, caching, and data persistence.</p>
+                <ul class="category-list">
+                    <li><a href="https://github.com/InitPHP/Database" target="_blank" rel="noopener noreferrer">Database</a></li>
+                    <li><a href="https://github.com/InitPHP/Redis" target="_blank" rel="noopener noreferrer">Redis</a></li>
+                    <li><a href="https://github.com/InitPHP/Cache" target="_blank" rel="noopener noreferrer">Cache</a></li>
+                    <li><a href="https://github.com/InitPHP/Barbarian" target="_blank" rel="noopener noreferrer">Barbarian (Migrations)</a></li>
+                </ul>
+            </div>
+
+            <div class="category-card">
+                <div class="category-icon"><i class="fa-solid fa-route"></i></div>
+                <h3>HTTP & Routing</h3>
+                <p>Request handling, routing, PSR-7/17 messages, and HTTP clients.</p>
+                <ul class="category-list">
+                    <li><a href="https://github.com/InitPHP/Router" target="_blank" rel="noopener noreferrer">Router</a></li>
+                    <li><a href="https://github.com/InitPHP/HTTP" target="_blank" rel="noopener noreferrer">HTTP (PSR-7/17)</a></li>
+                    <li><a href="https://github.com/InitPHP/HTTPClient" target="_blank" rel="noopener noreferrer">HTTPClient (PSR-18)</a></li>
+                    <li><a href="https://github.com/InitPHP/HTTPFactory" target="_blank" rel="noopener noreferrer">HTTPFactory (PSR-17)</a></li>
+                    <li><a href="https://github.com/InitPHP/Curl" target="_blank" rel="noopener noreferrer">Curl</a></li>
+                </ul>
+            </div>
+
+            <div class="category-card">
+                <div class="category-icon"><i class="fa-solid fa-shield-halved"></i></div>
+                <h3>Security</h3>
+                <p>Encryption, escaping, validation, and authentication utilities.</p>
+                <ul class="category-list">
+                    <li><a href="https://github.com/InitPHP/Encryption" target="_blank" rel="noopener noreferrer">Encryption</a></li>
+                    <li><a href="https://github.com/InitPHP/Escaper" target="_blank" rel="noopener noreferrer">Escaper</a></li>
+                    <li><a href="https://github.com/InitPHP/Validation" target="_blank" rel="noopener noreferrer">Validation</a></li>
+                    <li><a href="https://github.com/InitPHP/Auth" target="_blank" rel="noopener noreferrer">Auth</a></li>
+                    <li><a href="https://github.com/InitPHP/Input" target="_blank" rel="noopener noreferrer">Input</a></li>
+                </ul>
+            </div>
+
+            <div class="category-card">
+                <div class="category-icon"><i class="fa-solid fa-network-wired"></i></div>
+                <h3>Networking</h3>
+                <p>TCP/UDP sockets, mail sending, and real-time communication.</p>
+                <ul class="category-list">
+                    <li><a href="https://github.com/InitPHP/Socket" target="_blank" rel="noopener noreferrer">Socket</a></li>
+                    <li><a href="https://github.com/InitPHP/Mailer" target="_blank" rel="noopener noreferrer">Mailer</a></li>
+                    <li><a href="https://github.com/InitPHP/FiberLoops" target="_blank" rel="noopener noreferrer">FiberLoops</a></li>
+                </ul>
+            </div>
+
+            <div class="category-card">
+                <div class="category-icon"><i class="fa-solid fa-gear"></i></div>
+                <h3>Configuration</h3>
+                <p>Environment, config management, sessions, and cookies.</p>
+                <ul class="category-list">
+                    <li><a href="https://github.com/InitPHP/Config" target="_blank" rel="noopener noreferrer">Config</a></li>
+                    <li><a href="https://github.com/InitPHP/DotENV" target="_blank" rel="noopener noreferrer">DotENV</a></li>
+                    <li><a href="https://github.com/InitPHP/Sessions" target="_blank" rel="noopener noreferrer">Sessions</a></li>
+                    <li><a href="https://github.com/InitPHP/Cookies" target="_blank" rel="noopener noreferrer">Cookies</a></li>
+                    <li><a href="https://github.com/InitPHP/Container" target="_blank" rel="noopener noreferrer">Container (PSR-11)</a></li>
+                </ul>
+            </div>
+
+            <div class="category-card">
+                <div class="category-icon"><i class="fa-solid fa-toolbox"></i></div>
+                <h3>Utilities</h3>
+                <p>Logging, CLI tools, debugging, and general-purpose helpers.</p>
+                <ul class="category-list">
+                    <li><a href="https://github.com/InitPHP/Logger" target="_blank" rel="noopener noreferrer">Logger (PSR-3)</a></li>
+                    <li><a href="https://github.com/InitPHP/Console" target="_blank" rel="noopener noreferrer">Console</a></li>
+                    <li><a href="https://github.com/InitPHP/CLITable" target="_blank" rel="noopener noreferrer">CLITable</a></li>
+                    <li><a href="https://github.com/InitPHP/PerformanceMeter" target="_blank" rel="noopener noreferrer">PerformanceMeter</a></li>
+                    <li><a href="https://github.com/InitPHP/VarDumper" target="_blank" rel="noopener noreferrer">VarDumper</a></li>
+                    <li><a href="https://github.com/InitPHP/ParameterBag" target="_blank" rel="noopener noreferrer">ParameterBag</a></li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- All Libraries -->
+    <section class="section" id="all-libraries">
+        <div class="section-header">
+            <h2>All Libraries</h2>
+            <p>Every package in the InitPHP ecosystem, ready to install via Composer.</p>
+        </div>
+        <div class="libraries-grid">
+            <a href="https://github.com/InitPHP/Database" target="_blank" rel="noopener noreferrer" class="lib-card">
+                <div class="lib-icon"><i class="fa-solid fa-database"></i></div>
+                <div class="lib-info">
+                    <div class="lib-name">Database</div>
+                    <div class="lib-desc">DBAL, Data Mapper, Query Builder, ORM</div>
+                </div>
+            </a>
+            <a href="https://github.com/InitPHP/Router" target="_blank" rel="noopener noreferrer" class="lib-card">
+                <div class="lib-icon"><i class="fa-solid fa-route"></i></div>
+                <div class="lib-info">
+                    <div class="lib-name">Router</div>
+                    <div class="lib-desc">Advanced HTTP routing library</div>
+                </div>
+            </a>
+            <a href="https://github.com/InitPHP/Socket" target="_blank" rel="noopener noreferrer" class="lib-card">
+                <div class="lib-icon"><i class="fa-solid fa-plug"></i></div>
+                <div class="lib-info">
+                    <div class="lib-name">Socket</div>
+                    <div class="lib-desc">TCP, TLS, UDP, SSL Server/Client</div>
+                </div>
+            </a>
+            <a href="https://github.com/InitPHP/Events" target="_blank" rel="noopener noreferrer" class="lib-card">
+                <div class="lib-icon"><i class="fa-solid fa-bolt"></i></div>
+                <div class="lib-info">
+                    <div class="lib-name">Events</div>
+                    <div class="lib-desc">Event hooks for extensible architecture</div>
+                </div>
+            </a>
+            <a href="https://github.com/InitPHP/FiberLoops" target="_blank" rel="noopener noreferrer" class="lib-card">
+                <div class="lib-icon"><i class="fa-solid fa-arrows-spin"></i></div>
+                <div class="lib-info">
+                    <div class="lib-name">FiberLoops</div>
+                    <div class="lib-desc">Async-style PHP Fiber loops</div>
+                </div>
+            </a>
+            <a href="https://github.com/InitPHP/Cache" target="_blank" rel="noopener noreferrer" class="lib-card">
+                <div class="lib-icon"><i class="fa-solid fa-box-archive"></i></div>
+                <div class="lib-info">
+                    <div class="lib-name">Cache</div>
+                    <div class="lib-desc">PSR-16 Simple Cache interface</div>
+                </div>
+            </a>
+            <a href="https://github.com/InitPHP/Encryption" target="_blank" rel="noopener noreferrer" class="lib-card">
+                <div class="lib-icon"><i class="fa-solid fa-lock"></i></div>
+                <div class="lib-info">
+                    <div class="lib-name">Encryption</div>
+                    <div class="lib-desc">OpenSSL & Sodium encryption</div>
+                </div>
+            </a>
+            <a href="https://github.com/InitPHP/Validation" target="_blank" rel="noopener noreferrer" class="lib-card">
+                <div class="lib-icon"><i class="fa-solid fa-check-double"></i></div>
+                <div class="lib-info">
+                    <div class="lib-name">Validation</div>
+                    <div class="lib-desc">Data type & structure verification</div>
+                </div>
+            </a>
+            <a href="https://github.com/InitPHP/Curl" target="_blank" rel="noopener noreferrer" class="lib-card">
+                <div class="lib-icon"><i class="fa-solid fa-arrow-right-arrow-left"></i></div>
+                <div class="lib-info">
+                    <div class="lib-name">Curl</div>
+                    <div class="lib-desc">Advanced HTTP request library</div>
+                </div>
+            </a>
+            <a href="https://github.com/InitPHP/Translator" target="_blank" rel="noopener noreferrer" class="lib-card">
+                <div class="lib-icon"><i class="fa-solid fa-language"></i></div>
+                <div class="lib-info">
+                    <div class="lib-name">Translator</div>
+                    <div class="lib-desc">Multi-language support</div>
+                </div>
+            </a>
+            <a href="https://github.com/InitPHP/Mailer" target="_blank" rel="noopener noreferrer" class="lib-card">
+                <div class="lib-icon"><i class="fa-solid fa-envelope"></i></div>
+                <div class="lib-info">
+                    <div class="lib-name">Mailer</div>
+                    <div class="lib-desc">Simple SMTP mail sending</div>
+                </div>
+            </a>
+            <a href="https://github.com/InitPHP/Logger" target="_blank" rel="noopener noreferrer" class="lib-card">
+                <div class="lib-icon"><i class="fa-solid fa-file-lines"></i></div>
+                <div class="lib-info">
+                    <div class="lib-name">Logger</div>
+                    <div class="lib-desc">PSR-3 logging to file or database</div>
+                </div>
+            </a>
+            <a href="https://github.com/InitPHP/HTTP" target="_blank" rel="noopener noreferrer" class="lib-card">
+                <div class="lib-icon"><i class="fa-solid fa-globe"></i></div>
+                <div class="lib-info">
+                    <div class="lib-name">HTTP</div>
+                    <div class="lib-desc">PSR-7 & PSR-17 HTTP Messages</div>
+                </div>
+            </a>
+            <a href="https://github.com/InitPHP/Config" target="_blank" rel="noopener noreferrer" class="lib-card">
+                <div class="lib-icon"><i class="fa-solid fa-sliders"></i></div>
+                <div class="lib-info">
+                    <div class="lib-name">Config</div>
+                    <div class="lib-desc">Configuration file management</div>
+                </div>
+            </a>
+            <a href="https://github.com/InitPHP/DotENV" target="_blank" rel="noopener noreferrer" class="lib-card">
+                <div class="lib-icon"><i class="fa-solid fa-file-code"></i></div>
+                <div class="lib-info">
+                    <div class="lib-name">DotENV</div>
+                    <div class="lib-desc">Load .env environment variables</div>
+                </div>
+            </a>
+            <a href="https://github.com/InitPHP/Container" target="_blank" rel="noopener noreferrer" class="lib-card">
+                <div class="lib-icon"><i class="fa-solid fa-cube"></i></div>
+                <div class="lib-info">
+                    <div class="lib-name">Container</div>
+                    <div class="lib-desc">PSR-11 dependency injection</div>
+                </div>
+            </a>
+            <a href="https://github.com/InitPHP/Redis" target="_blank" rel="noopener noreferrer" class="lib-card">
+                <div class="lib-icon"><i class="fa-solid fa-server"></i></div>
+                <div class="lib-info">
+                    <div class="lib-name">Redis</div>
+                    <div class="lib-desc">Redis management library</div>
+                </div>
+            </a>
+            <a href="https://github.com/InitPHP/Escaper" target="_blank" rel="noopener noreferrer" class="lib-card">
+                <div class="lib-icon"><i class="fa-solid fa-shield"></i></div>
+                <div class="lib-info">
+                    <div class="lib-name">Escaper</div>
+                    <div class="lib-desc">HTML, JS, CSS, URL escaping</div>
+                </div>
+            </a>
+            <a href="https://github.com/InitPHP/Console" target="_blank" rel="noopener noreferrer" class="lib-card">
+                <div class="lib-icon"><i class="fa-solid fa-terminal"></i></div>
+                <div class="lib-info">
+                    <div class="lib-name">Console</div>
+                    <div class="lib-desc">CLI application helper</div>
+                </div>
+            </a>
+            <a href="https://github.com/InitPHP/Auth" target="_blank" rel="noopener noreferrer" class="lib-card">
+                <div class="lib-icon"><i class="fa-solid fa-user-shield"></i></div>
+                <div class="lib-info">
+                    <div class="lib-name">Auth</div>
+                    <div class="lib-desc">Authorization library</div>
+                </div>
+            </a>
+            <a href="https://github.com/InitPHP/Sessions" target="_blank" rel="noopener noreferrer" class="lib-card">
+                <div class="lib-icon"><i class="fa-solid fa-key"></i></div>
+                <div class="lib-info">
+                    <div class="lib-name">Sessions</div>
+                    <div class="lib-desc">Session management</div>
+                </div>
+            </a>
+            <a href="https://github.com/InitPHP/Cookies" target="_blank" rel="noopener noreferrer" class="lib-card">
+                <div class="lib-icon"><i class="fa-solid fa-cookie-bite"></i></div>
+                <div class="lib-info">
+                    <div class="lib-name">Cookies</div>
+                    <div class="lib-desc">Secure signed cookies</div>
+                </div>
+            </a>
+            <a href="https://github.com/InitPHP/ParameterBag" target="_blank" rel="noopener noreferrer" class="lib-card">
+                <div class="lib-icon"><i class="fa-solid fa-bag-shopping"></i></div>
+                <div class="lib-info">
+                    <div class="lib-name">ParameterBag</div>
+                    <div class="lib-desc">Key-value data storage</div>
+                </div>
+            </a>
+            <a href="https://github.com/InitPHP/Input" target="_blank" rel="noopener noreferrer" class="lib-card">
+                <div class="lib-icon"><i class="fa-solid fa-keyboard"></i></div>
+                <div class="lib-info">
+                    <div class="lib-name">Input</div>
+                    <div class="lib-desc">User input retrieval & validation</div>
+                </div>
+            </a>
+            <a href="https://github.com/InitPHP/PerformanceMeter" target="_blank" rel="noopener noreferrer" class="lib-card">
+                <div class="lib-icon"><i class="fa-solid fa-gauge-high"></i></div>
+                <div class="lib-info">
+                    <div class="lib-name">PerformanceMeter</div>
+                    <div class="lib-desc">Runtime benchmarking</div>
+                </div>
+            </a>
+            <a href="https://github.com/InitPHP/Barbarian" target="_blank" rel="noopener noreferrer" class="lib-card">
+                <div class="lib-icon"><i class="fa-solid fa-arrow-up-from-bracket"></i></div>
+                <div class="lib-info">
+                    <div class="lib-name">Barbarian</div>
+                    <div class="lib-desc">Database migration library</div>
+                </div>
+            </a>
+            <a href="https://github.com/InitPHP/EventEmitter" target="_blank" rel="noopener noreferrer" class="lib-card">
+                <div class="lib-icon"><i class="fa-solid fa-tower-broadcast"></i></div>
+                <div class="lib-info">
+                    <div class="lib-name">EventEmitter</div>
+                    <div class="lib-desc">Event emitter pattern</div>
+                </div>
+            </a>
+            <a href="https://github.com/InitPHP/CLITable" target="_blank" rel="noopener noreferrer" class="lib-card">
+                <div class="lib-icon"><i class="fa-solid fa-table"></i></div>
+                <div class="lib-info">
+                    <div class="lib-name">CLITable</div>
+                    <div class="lib-desc">Beautiful CLI tables</div>
+                </div>
+            </a>
+            <a href="https://github.com/InitPHP/Upload" target="_blank" rel="noopener noreferrer" class="lib-card">
+                <div class="lib-icon"><i class="fa-solid fa-cloud-arrow-up"></i></div>
+                <div class="lib-info">
+                    <div class="lib-name">Upload</div>
+                    <div class="lib-desc">File upload to local/remote</div>
+                </div>
+            </a>
+            <a href="https://github.com/InitPHP/Views" target="_blank" rel="noopener noreferrer" class="lib-card">
+                <div class="lib-icon"><i class="fa-solid fa-eye"></i></div>
+                <div class="lib-info">
+                    <div class="lib-name">Views</div>
+                    <div class="lib-desc">View/template rendering</div>
+                </div>
+            </a>
+            <a href="https://github.com/InitPHP/VarDumper" target="_blank" rel="noopener noreferrer" class="lib-card">
+                <div class="lib-icon"><i class="fa-solid fa-bug"></i></div>
+                <div class="lib-info">
+                    <div class="lib-name">VarDumper</div>
+                    <div class="lib-desc">Variable dumper for debugging</div>
+                </div>
+            </a>
+            <a href="https://github.com/InitPHP/HTTPClient" target="_blank" rel="noopener noreferrer" class="lib-card">
+                <div class="lib-icon"><i class="fa-solid fa-satellite-dish"></i></div>
+                <div class="lib-info">
+                    <div class="lib-name">HTTPClient</div>
+                    <div class="lib-desc">PSR-18 HTTP Client</div>
+                </div>
+            </a>
+            <a href="https://github.com/InitPHP/HTTPFactory" target="_blank" rel="noopener noreferrer" class="lib-card">
+                <div class="lib-icon"><i class="fa-solid fa-industry"></i></div>
+                <div class="lib-info">
+                    <div class="lib-name">HTTPFactory</div>
+                    <div class="lib-desc">PSR-17 HTTP Factory</div>
+                </div>
+            </a>
+            <a href="https://github.com/InitPHP/Queue" target="_blank" rel="noopener noreferrer" class="lib-card">
+                <div class="lib-icon"><i class="fa-solid fa-list-check"></i></div>
+                <div class="lib-info">
+                    <div class="lib-name">Queue</div>
+                    <div class="lib-desc">Job queue management</div>
+                </div>
+            </a>
+            <a href="https://github.com/InitPHP/RedisSessionHandler" target="_blank" rel="noopener noreferrer" class="lib-card">
+                <div class="lib-icon"><i class="fa-solid fa-memory"></i></div>
+                <div class="lib-info">
+                    <div class="lib-name">RedisSessionHandler</div>
+                    <div class="lib-desc">Redis-backed session handler</div>
+                </div>
+            </a>
+            <a href="https://github.com/InitPHP/Framework3" target="_blank" rel="noopener noreferrer" class="lib-card">
+                <div class="lib-icon"><i class="fa-solid fa-layer-group"></i></div>
+                <div class="lib-info">
+                    <div class="lib-name">Framework3</div>
+                    <div class="lib-desc">3rd gen MVC Framework</div>
+                </div>
+            </a>
+            <a href="https://github.com/InitPHP/Polyfill-PHP80" target="_blank" rel="noopener noreferrer" class="lib-card">
+                <div class="lib-icon"><i class="fa-solid fa-puzzle-piece"></i></div>
+                <div class="lib-info">
+                    <div class="lib-name">Polyfill-PHP80</div>
+                    <div class="lib-desc">PHP 8.0 functions for PHP 7</div>
+                </div>
+            </a>
+        </div>
+        <div class="view-all">
+            <a href="https://github.com/orgs/InitPHP/repositories" target="_blank" rel="noopener noreferrer">
+                View All Repositories <i class="fa-solid fa-arrow-right"></i>
+            </a>
+        </div>
+    </section>
+
+    <!-- Install -->
+    <section class="section install" id="install">
+        <div class="section-header">
+            <h2>Get Started</h2>
+            <p>Install any library with Composer in seconds.</p>
+        </div>
+        <div class="install-box">
+            <div class="install-box-header">
+                <span class="install-dot"></span>
+                <span class="install-dot"></span>
+                <span class="install-dot"></span>
+                <span>terminal</span>
+            </div>
+            <div class="install-box-body">
+                <div style="margin-bottom: 0.75rem;">
+                    <code><span class="cmd-prefix">$ </span>composer require initphp/database</code>
+                </div>
+                <div style="margin-bottom: 0.75rem;">
+                    <code><span class="cmd-prefix">$ </span>composer require initphp/router</code>
+                </div>
+                <div style="margin-bottom: 0.75rem;">
+                    <code><span class="cmd-prefix">$ </span>composer require initphp/socket</code>
+                </div>
+                <div>
+                    <code><span class="cmd-prefix">$ </span>composer require initphp/cache</code>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-inner">
+            <div class="footer-left">
+                <a href="/" class="footer-brand">InitPHP</a>
+                <span class="footer-copy">
+                    &copy; 2022-2026 InitPHP Project. <a href="./license.txt" target="_blank">MIT License</a>.
+                    Created by <a href="https://github.com/muhammetsafak" target="_blank" rel="noopener noreferrer">Muhammet SAFAK</a>
+                </span>
+            </div>
+            <div class="footer-links">
+                <a href="https://github.com/InitPHP" target="_blank" rel="noopener noreferrer" title="GitHub" aria-label="GitHub"><i class="fa-brands fa-github"></i></a>
+                <a href="https://www.linkedin.com/in/muhametsafak/" target="_blank" rel="noopener noreferrer" title="LinkedIn" aria-label="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
+                <a href="https://medium.com/@muhametsafak" target="_blank" rel="noopener noreferrer" title="Medium" aria-label="Medium"><i class="fa-brands fa-medium"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scroll to top -->
+    <button class="scroll-top" id="scrollTop" aria-label="Scroll to top">
+        <i class="fa-solid fa-arrow-up"></i>
+    </button>
+
+    <script>
+        // Mobile menu toggle
+        const toggle = document.getElementById('mobileToggle');
+        const navLinks = document.getElementById('navLinks');
+        toggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            const expanded = toggle.getAttribute('aria-expanded') === 'true';
+            toggle.setAttribute('aria-expanded', !expanded);
+        });
+
+        // Close mobile menu on link click
+        navLinks.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                toggle.setAttribute('aria-expanded', 'false');
+            });
+        });
+
+        // Scroll to top button
+        const scrollBtn = document.getElementById('scrollTop');
+        window.addEventListener('scroll', () => {
+            scrollBtn.classList.toggle('visible', window.scrollY > 400);
+        }, { passive: true });
+        scrollBtn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    </script>
+</body>
 </html>

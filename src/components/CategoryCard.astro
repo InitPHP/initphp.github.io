@@ -1,0 +1,89 @@
+---
+import { Icon } from 'astro-icon/components';
+import type { Category } from '../data/categories';
+
+type Props = Category;
+const { icon, title, desc, items } = Astro.props;
+---
+
+<div class="category-card">
+  <div class="category-icon"><Icon name={icon} /></div>
+  <h3>{title}</h3>
+  <p>{desc}</p>
+  <ul class="category-list">
+    {items.map((item) => (
+      <li>
+        <a href={item.repo} target="_blank" rel="noopener noreferrer" class="bullet-before">{item.label}</a>
+      </li>
+    ))}
+  </ul>
+</div>
+
+<style>
+  /* .category-card, baseline.html:536-541 */
+  .category-card {
+    padding: 2rem;
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-card);
+  }
+
+  /* .category-icon, baseline.html:543-554. The `em`-sized SVG astro-icon
+     emits scales from this font-size, so no width/height belongs here. */
+  .category-icon {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-accent-glow);
+    border-radius: 12px;
+    margin-bottom: 1rem;
+    font-size: 1.25rem;
+    color: var(--color-accent-light);
+  }
+
+  /* .category-card h3, baseline.html:556-560 */
+  .category-card h3 {
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+
+  /* .category-card p, baseline.html:562-566 */
+  .category-card p {
+    font-size: 0.85rem;
+    color: var(--color-text-secondary);
+    line-height: 1.5;
+  }
+
+  /* .category-list, baseline.html:568-571 */
+  .category-list {
+    list-style: none;
+    margin-top: 1rem;
+  }
+
+  /* .category-list li, baseline.html:573-575 */
+  .category-list li {
+    padding: 0.3rem 0;
+  }
+
+  /* .category-list a, baseline.html:577-584. The `::before` dot
+     (baseline.html:586-593) is the `bullet-before` @utility from
+     global.css, applied via class on the <a> above, rather than
+     redeclared here. Unlayered scoped rule beats global.css's
+     @layer base `a { color }`, so no !important needed. */
+  .category-list a {
+    font-size: 0.85rem;
+    color: var(--color-text-secondary);
+    font-family: var(--font-mono);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  /* .category-list a:hover, baseline.html:595-597 */
+  .category-list a:hover {
+    color: var(--color-accent-light);
+  }
+</style>

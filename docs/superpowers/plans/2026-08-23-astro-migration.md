@@ -93,6 +93,16 @@ For each component task the procedure is mechanical and identical:
 Two things Task 7 discovered the hard way, which every later component task inherits:
 
 - **Astro's scoped `<style>` blocks are unlayered**, so they beat `@layer base` and also beat Tailwind utilities. That is usually what you want for a component's own rules. But it means a Tailwind utility and a scoped rule targeting the same element and property will resolve in favour of the scoped rule, not by specificity. Pick one per property; do not set a property both ways.
+- **Rules shared across files belong in `global.css`, inside `@layer components`.** Astro
+  scopes a component's `<style>` to that file only — it stamps a `data-astro-cid-*`
+  attribute on the file's own elements and qualifies every selector with it. A rule
+  written in `index.astro` therefore cannot style markup that lives inside a child
+  component. The page-level `.section` and `.section-header*` rules (baseline 349-371)
+  are used by four sections, one of which (Install) is authored in its own component, so
+  they live in `global.css` under `@layer components`. That layer is the right one:
+  Tailwind declares the order `theme, base, components, utilities`, so these rules beat
+  the `@layer base` reset while a utility can still override them. Unlayered would beat
+  every utility — the bug the reset itself had.
 - **Lightning CSS strips vendor-prefixed properties from every stylesheet route** in this pipeline — component `<style>`, imported global CSS, and explicit `lightningcss.targets` were all verified to lose `-webkit-backdrop-filter`. If the baseline carries a prefixed property that a target browser still needs, an inline `style` attribute is the only route that survives. Use it sparingly and comment it.
 
 Correctness of the result is proved by Task 13's screenshot comparison, not by reading the classes.
@@ -1649,6 +1659,11 @@ const commands = [
 ```
 
 The baseline uses an inline `style="margin-bottom: 0.75rem"` on the first three command rows and nothing on the last; `mb-3` is Tailwind's 0.75rem. Translate `.install-box`, `.install-box-header`, `.install-dot` (including the three `:nth-child` colours at `600-656`), `.install-box-body` and `.cmd-prefix` into a `<style>` block.
+
+`.section` and `.section-header*` are **not** this component's to write — they live in
+`src/styles/global.css` under `@layer components` and reach this component automatically.
+Do not redeclare them, and do not assume they are missing just because they are absent
+from this component's own style block.
 
 - [ ] **Step 3: Write `src/components/Footer.astro`**
 

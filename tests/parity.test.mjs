@@ -31,19 +31,19 @@ test('canonical and favicon match', () => {
 });
 
 test('JSON-LD matches', () => {
-  assert.deepEqual(built().jsonLd, baseline.jsonLd);
+  assert.deepStrictEqual(built().jsonLd, baseline.jsonLd);
 });
 
 test('headings match in order and text', () => {
-  assert.deepEqual(built().headings, baseline.headings);
+  assert.deepStrictEqual(built().headings, baseline.headings);
 });
 
 test('anchors match in order, target and label', () => {
-  assert.deepEqual(built().anchors, baseline.anchors);
+  assert.deepStrictEqual(built().anchors, baseline.anchors);
 });
 
 test('images match', () => {
-  assert.deepEqual(built().images, baseline.images);
+  assert.deepStrictEqual(built().images, baseline.images);
 });
 
 test('rendered body text matches exactly', () => {

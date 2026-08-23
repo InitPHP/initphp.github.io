@@ -4,3 +4,11 @@
 
 # SDD workspace
 .superpowers/
+
+# Build
+node_modules/
+dist/
+.astro/
+
+# Editors
+.idea/

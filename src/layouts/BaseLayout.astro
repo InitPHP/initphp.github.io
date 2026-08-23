@@ -1,0 +1,67 @@
+---
+import '@fontsource-variable/inter';
+import '@fontsource-variable/jetbrains-mono';
+import '../styles/global.css';
+
+const title = 'InitPHP - Open Source PHP Libraries & Components';
+const description =
+  'InitPHP is an open source project providing modular, standalone PHP libraries for database, routing, caching, encryption, sockets, and more. Build robust PHP applications with lightweight, well-tested components.';
+const ogDescription =
+  'Modular, standalone PHP libraries for database, routing, caching, encryption, sockets, and more. Build robust PHP applications with lightweight, well-tested components.';
+const twitterDescription =
+  'Modular, standalone PHP libraries for database, routing, caching, encryption, sockets, and more.';
+const image = 'https://initphp.org/logos/initphp-icon-700.png';
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'InitPHP',
+  url: 'https://initphp.org',
+  logo: image,
+  description:
+    'InitPHP is an open source project providing modular, standalone PHP libraries for database, routing, caching, encryption, sockets, and more.',
+  foundingDate: '2022',
+  founder: {
+    '@type': 'Person',
+    name: 'Muhammet SAFAK',
+    url: 'https://github.com/muhammetsafak',
+  },
+  sameAs: ['https://github.com/InitPHP'],
+};
+---
+
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta
+      name="keywords"
+      content="PHP, open source, PHP libraries, PHP components, database, router, ORM, cache, encryption, socket, PSR"
+    />
+    <meta name="author" content="Muhammet SAFAK" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://initphp.org/" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://initphp.org/" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={ogDescription} />
+    <meta property="og:image" content={image} />
+    <meta property="og:site_name" content="InitPHP" />
+    <meta property="og:locale" content="en_US" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={twitterDescription} />
+    <meta name="twitter:image" content={image} />
+
+    <link rel="icon" type="image/png" href="/logos/initphp-icon-700.png" />
+
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)}></script>
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>

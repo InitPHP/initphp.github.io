@@ -90,6 +90,11 @@ For each component task the procedure is mechanical and identical:
    `max-md` is `< 48rem` and `max-xs` is `< 30rem`, against the baseline's `<= 768px` and `<= 480px`. The two differ only at exactly 768.00 and 480.00 CSS pixels. That is accepted.
 4. Do not invent, round, or "improve" any value. Copy pixel and colour values exactly.
 
+Two things Task 7 discovered the hard way, which every later component task inherits:
+
+- **Astro's scoped `<style>` blocks are unlayered**, so they beat `@layer base` and also beat Tailwind utilities. That is usually what you want for a component's own rules. But it means a Tailwind utility and a scoped rule targeting the same element and property will resolve in favour of the scoped rule, not by specificity. Pick one per property; do not set a property both ways.
+- **Lightning CSS strips vendor-prefixed properties from every stylesheet route** in this pipeline — component `<style>`, imported global CSS, and explicit `lightningcss.targets` were all verified to lose `-webkit-backdrop-filter`. If the baseline carries a prefixed property that a target browser still needs, an inline `style` attribute is the only route that survives. Use it sparingly and comment it.
+
 Correctness of the result is proved by Task 13's screenshot comparison, not by reading the classes.
 
 ---
@@ -490,27 +495,34 @@ The token values are copied verbatim from `tests/fixtures/baseline.html:66-88`.
   --font-mono: 'JetBrains Mono Variable', 'Fira Code', ui-monospace, monospace;
 }
 
-/* --- global reset and base, from baseline.html:61-105 --- */
-html {
-  scroll-behavior: smooth;
-}
+/* --- global reset and base, from baseline.html:61-105 ---
+   Wrapped in @layer base. Tailwind declares the order
+   `theme, base, components, utilities`, and an UNLAYERED rule beats every
+   layered one regardless of specificity — so an unlayered `a { color }`
+   here would silently override `text-*` on every link in the page and the
+   only symptom would be the wrong colour on screen. */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
 
-body {
-  font-family: var(--font-sans);
-  background: var(--color-bg-primary);
-  color: var(--color-text-primary);
-  line-height: 1.6;
-  -webkit-font-smoothing: antialiased;
-}
+  body {
+    font-family: var(--font-sans);
+    background: var(--color-bg-primary);
+    color: var(--color-text-primary);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
 
-a {
-  color: var(--color-accent-light);
-  text-decoration: none;
-  transition: color 0.2s;
-}
+  a {
+    color: var(--color-accent-light);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
 
-a:hover {
-  color: #c4bbfa;
+  a:hover {
+    color: #c4bbfa;
+  }
 }
 
 /* --- rules with no utility equivalent --- */

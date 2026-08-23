@@ -1433,8 +1433,8 @@ import { featured } from '../data/featured';
 Run: `npm run build && npm test`
 Expected: `headings match...` now includes the `Featured Libraries` h2.
 
-Run: `grep -c 'featured-card"' dist/index.html`
-Expected: `6`.
+Run: `grep -o 'featured-card"' dist/index.html | wc -l`
+Expected: `6`. Use `grep -o | wc -l`, not `grep -c` — `compressHTML` emits the whole page on one line, so `grep -c` counts matching *lines* and always reports 1.
 
 - [ ] **Step 5: Commit**
 
@@ -1505,8 +1505,8 @@ The `.category-icon` box is a fixed 48×48 flex container with `font-size: 1.25r
 Run: `npm run build && npm test`
 Expected: all six `h3` category titles appear in `headings match...`.
 
-Run: `grep -c 'category-card"' dist/index.html`
-Expected: `6`.
+Run: `grep -o 'category-card"' dist/index.html | wc -l`
+Expected: `6`. Use `grep -o | wc -l`, not `grep -c` — the built page is a single line, so `grep -c` always reports 1.
 
 - [ ] **Step 5: Commit**
 
@@ -1585,8 +1585,8 @@ import { libraries } from '../data/libraries';
 Run: `npm run build && npm test`
 Expected: `anchors match...` is now very close — only the install/footer anchors are missing.
 
-Run: `grep -c 'lib-card"' dist/index.html`
-Expected: `27`.
+Run: `grep -o 'lib-card"' dist/index.html | wc -l`
+Expected: `27`. Use `grep -o | wc -l`, not `grep -c` — the built page is a single line, so `grep -c` always reports 1.
 
 - [ ] **Step 5: Commit**
 
@@ -1987,8 +1987,8 @@ Then watch the run: `gh run watch`
 Run: `curl -sI https://initphp.org | head -1`
 Expected: `HTTP/2 200`
 
-Run: `curl -s https://initphp.org | grep -c 'lib-card'`
-Expected: `27`
+Run: `curl -s https://initphp.org | grep -o 'lib-card' | wc -l`
+Expected: `27` (`grep -c` would report 1 — the page is a single line)
 
 ---
 

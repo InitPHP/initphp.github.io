@@ -9,7 +9,7 @@
 The site is a single hand-maintained `index.html` (1378 lines) with 770 lines of
 inline CSS and 28 lines of inline JavaScript. Three problems follow from that shape:
 
-1. **Repeated markup.** 27 library cards, 6 category cards, and 4 featured cards are
+1. **Repeated markup.** 27 library cards, 6 category cards, and 6 featured cards are
    written out by hand. Adding a library means editing markup in three places, and the
    hero copy plus the stats block both hard-code the number "27".
 2. **Dead weight.** `assets/css/bootstrap.min.css`, `assets/js/bootstrap.bundle.min.js`,
@@ -115,7 +115,7 @@ public/
 src/
   data/
     libraries.ts            # the 27 entries behind the "All Libraries" grid
-    featured.ts             # the 4 featured cards
+    featured.ts             # the 6 featured cards
     categories.ts           # the 6 category cards
   styles/
     global.css              # @import "tailwindcss"; @theme tokens; custom utilities
@@ -290,7 +290,7 @@ The migration is complete only when all of the following hold:
    keywords, author, robots, canonical, all seven Open Graph properties, all four
    Twitter Card properties, the favicon link, and the JSON-LD `Organization` block,
    with identical values.
-4. **Link parity.** All 27 library links, 4 featured card link pairs, 6 category card
+4. **Link parity.** All 27 library links, 6 featured card link pairs, 6 category card
    lists, the "View All Repositories" link, the three footer social links, and the
    `./license.txt` link resolve to the same targets as before.
 5. **Behaviour.** The mobile menu toggle and the scroll-to-top button work in a real

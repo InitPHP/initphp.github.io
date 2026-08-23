@@ -1,0 +1,103 @@
+---
+import { Icon } from 'astro-icon/components';
+
+const social = [
+  { href: 'https://github.com/InitPHP', label: 'GitHub', icon: 'fa6-brands:github' },
+  { href: 'https://www.linkedin.com/in/muhametsafak/', label: 'LinkedIn', icon: 'fa6-brands:linkedin' },
+  { href: 'https://medium.com/@muhametsafak', label: 'Medium', icon: 'fa6-brands:medium' },
+];
+---
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-left">
+      <a href="/" class="footer-brand">InitPHP</a>
+      <span class="footer-copy">
+        &copy; 2022-2026 InitPHP Project. <a href="./license.txt" target="_blank">MIT License</a>. Created by <a href="https://github.com/muhammetsafak" target="_blank" rel="noopener noreferrer">Muhammet SAFAK</a>
+      </span>
+    </div>
+    <div class="footer-links">
+      {social.map((s) => (
+        <a href={s.href} target="_blank" rel="noopener noreferrer" title={s.label} aria-label={s.label}>
+          <Icon name={s.icon} />
+        </a>
+      ))}
+    </div>
+  </div>
+</footer>
+
+<style>
+  /* footer, baseline.html:656-659 */
+  footer {
+    padding: 3rem 1.5rem;
+    border-top: 1px solid var(--color-border);
+  }
+
+  /* .footer-inner, baseline.html:661-669 */
+  .footer-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  /* .footer-left, baseline.html:671-675 */
+  .footer-left {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  /* .footer-brand, baseline.html:677-681. Kept `!important` as a faithful
+     transcription, matching Navbar's .nav-github precedent (baseline.html:
+     172-182) — it is redundant now that Astro's unlayered scoped styles
+     already beat `@layer base`'s `a { color }`, but Task 6/7 chose to keep
+     it there rather than drop it, and this component follows that choice
+     for consistency rather than re-litigating it per component. */
+  .footer-brand {
+    font-weight: 700;
+    color: var(--color-text-primary) !important;
+    font-size: 1.05rem;
+  }
+
+  /* .footer-copy, baseline.html:683-686 */
+  .footer-copy {
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+  }
+
+  /* .footer-links, baseline.html:688-691 */
+  .footer-links {
+    display: flex;
+    gap: 1.5rem;
+  }
+
+  /* .footer-links a, baseline.html:693-697 */
+  .footer-links a {
+    color: var(--color-text-muted);
+    font-size: 1.15rem;
+    transition: color 0.2s;
+  }
+
+  /* .footer-links a:hover, baseline.html:699-701 */
+  .footer-links a:hover {
+    color: var(--color-accent-light);
+  }
+
+  /* Desktop-first: baseline's @media (max-width: 768px), baseline.html:
+     756-763. Only the .footer-inner/.footer-left overrides in that block
+     apply here; the rest belong to Navbar and earlier sections. */
+  @media (max-width: 768px) {
+    .footer-inner {
+      flex-direction: column;
+      text-align: center;
+    }
+
+    .footer-left {
+      flex-direction: column;
+    }
+  }
+</style>

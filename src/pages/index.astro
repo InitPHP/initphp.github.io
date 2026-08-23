@@ -7,6 +7,9 @@ import Stats from '../components/Stats.astro';
 import FeaturedCard from '../components/FeaturedCard.astro';
 import CategoryCard from '../components/CategoryCard.astro';
 import LibCard from '../components/LibCard.astro';
+import Install from '../components/Install.astro';
+import Footer from '../components/Footer.astro';
+import ScrollTop from '../components/ScrollTop.astro';
 import { featured } from '../data/featured';
 import { categories } from '../data/categories';
 import { libraries } from '../data/libraries';
@@ -54,6 +57,15 @@ import { libraries } from '../data/libraries';
       </a>
     </div>
   </section>
+
+  <!-- Install, baseline.html:1298-1324 -->
+  <Install />
+
+  <!-- Footer, baseline.html:1327-1343 -->
+  <Footer />
+
+  <!-- Scroll to top, baseline.html:1346-1348 -->
+  <ScrollTop />
 </BaseLayout>
 
 <style>

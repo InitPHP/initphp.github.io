@@ -1,0 +1,60 @@
+---
+import { Icon } from 'astro-icon/components';
+---
+
+<button class="scroll-top" id="scrollTop" aria-label="Scroll to top">
+  <Icon name="fa6-solid:arrow-up" />
+</button>
+
+<style>
+  /* .scroll-top, baseline.html:810-829. opacity + visibility are paired
+     deliberately: without visibility: hidden, the invisible button would
+     still intercept clicks in the bottom-right corner of every page view. */
+  .scroll-top {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    width: 44px;
+    height: 44px;
+    background: var(--color-accent);
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    font-size: 1.1rem;
+    cursor: pointer;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s, visibility 0.3s, transform 0.2s;
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* .scroll-top.visible, baseline.html:831-834 */
+  .scroll-top.visible {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  /* .scroll-top:hover, baseline.html:836-838 */
+  .scroll-top:hover {
+    transform: translateY(-3px);
+  }
+</style>
+
+<script>
+  const scrollBtn = document.getElementById('scrollTop')!;
+
+  window.addEventListener(
+    'scroll',
+    () => {
+      scrollBtn.classList.toggle('visible', window.scrollY > 400);
+    },
+    { passive: true },
+  );
+
+  scrollBtn.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+</script>

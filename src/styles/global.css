@@ -89,3 +89,14 @@ a:hover {
     flex-shrink: 0;
   }
 }
+
+/* astro-icon already emits per-icon `width`/`height` in `em` (github is
+   0.97em x 1em, database 0.88em x 1em), so the SVG scales with the
+   inherited font-size and keeps its own aspect ratio — exactly how the
+   FontAwesome glyphs behaved. Do NOT set width or height here; that
+   would override those values and fight the library. Only the two
+   things inline SVG does not do for itself are needed. */
+[data-icon] {
+  display: inline-block;
+  vertical-align: -0.125em;
+}

@@ -35,12 +35,17 @@ through GitHub Actions to GitHub Pages on the same domain.
 
 | Area | Decision | Rationale |
 | --- | --- | --- |
-| Framework | Astro 5, `output: 'static'` | Zero client JS by default; static HTML output matches the current hosting model. |
-| Styling | Tailwind CSS v4 via `@tailwindcss/vite` | Chosen by the project owner over keeping hand-written CSS. In v4 the `@astrojs/tailwind` integration is no longer the supported path; the Vite plugin is. |
-| Icons | `astro-icon` with `@iconify-json/fa6-solid` and `@iconify-json/fa6-brands` | Icons inline as SVG at build time. Removes 13 MB of webfonts and every icon network request, and eliminates icon-font FOUT. |
-| Fonts | `@fontsource-variable/inter`, `@fontsource-variable/jetbrains-mono` | Self-hosted, removing the two `fonts.googleapis.com` preconnects and the render-blocking stylesheet. |
+| Framework | **Astro 7.2.4** (current latest), `output: 'static'` | Zero client JS by default; static HTML output matches the current hosting model. `output` still accepts `'static'` in v7 and is the default. |
+| Styling | **Tailwind CSS 4.3.3** via `@tailwindcss/vite` 4.3.3, installed with `npx astro add tailwind` | Chosen by the project owner over keeping hand-written CSS. The `@astrojs/tailwind` integration is legacy (Tailwind 3 only); since Astro 5.2 the Vite plugin plus `@import "tailwindcss"` is the supported path, and `astro add tailwind` wires it up. |
+| Icons | **`astro-icon` 1.2.0** with `@iconify-json/fa6-solid` 1.2.4 and `@iconify-json/fa6-brands` 1.2.6 | Icons inline as SVG at build time. Removes 13 MB of webfonts and every icon network request, and eliminates icon-font FOUT. |
+| Fonts | `@fontsource-variable/inter` 5.3.0, `@fontsource-variable/jetbrains-mono` 5.3.0 | Self-hosted, removing the two `fonts.googleapis.com` preconnects and the render-blocking stylesheet. |
+| HTML whitespace | `compressHTML: true` set explicitly | See §3.2. Restores Astro v6 HTML-aware whitespace handling and removes an entire class of visual regression from this port. |
+| Node | 22.12.0 or newer required by Astro 7; CI pins Node 24 | `astro@7.2.4` declares `engines.node: ">=22.12.0"`. Local machine is on v24.18.0. |
 | Deployment | GitHub Actions building to GitHub Pages | Keeps the existing repository and domain. Source stays at the repo root; the built `dist/` is published as a Pages artifact. |
 | Sitemap / RSS | Not added | Single-page site; YAGNI. |
+
+Versions above were read from the npm registry on 2026-08-23 and are pinned in
+`package.json` with caret ranges.
 
 ### 3.1 Known defect carried in
 
@@ -49,6 +54,48 @@ icon. It is absent from the bundled free set, so it renders as nothing on the li
 site today. It is likewise absent from the Iconify free FA6 sets. It will be replaced
 with `fa6-solid:table-cells-large`. This is a bug fix, not a design change; all other
 42 icons map one-to-one.
+
+### 3.2 Astro 7 changes that affect this migration
+
+Astro 7 is a major release with breaking changes. Three of them touch this work:
+
+**Whitespace handling (the important one).** In Astro 7 the default for `compressHTML`
+changed from `true` to `'jsx'`, so Astro now strips whitespace using JSX rules. The
+upgrade guide's example: `<span>hello</span><em>world</em>` "now renders as `helloworld`
+instead of `hello world`". Under JSX rules, whitespace adjacent to a newline is
+discarded, so markup like
+
+```html
+<a class="nav-github">
+  <Icon name="fa6-brands:github" />
+  GitHub
+</a>
+```
+
+would render as `GitHub` glued to the icon with no space. The current site has many
+icon-then-label pairs of exactly this shape. Rather than audit every one of them for
+formatting, this migration sets `compressHTML: true` in `astro.config.mjs`, which keeps
+the v6 HTML-aware behaviour and makes the output whitespace-identical to the current
+page regardless of how the components are indented.
+
+**Rust compiler.** Astro 7 replaces the Go compiler with a Rust one that "is stricter
+about invalid HTML syntax". Unclosed non-void tags are now errors instead of being
+silently accepted, and semantically invalid HTML is no longer auto-corrected. This works
+in our favour: it will surface any malformed markup carried over from `index.html` at
+build time rather than at render time. It also means the port cannot rely on the
+compiler fixing anything.
+
+**Vite 8.** Astro 7 bundles Vite 8. `@tailwindcss/vite` 4.3.3 is current and expected to
+be compatible; `astro-icon` 1.2.0 was published on 2026-08-18 and declares no peer
+dependency on Astro, so its compatibility is asserted rather than guaranteed. It is
+validated empirically by verification step 1 in §10. **Fallback if `astro-icon` fails under
+Astro 7:** copy the 43 needed SVG files out of the existing `assets/fontawesome/svgs/`
+tree into `src/icons/` and use Astro's built-in SVG component imports, which need no
+third-party integration. Do this extraction *before* deleting `assets/fontawesome/`.
+
+The remaining v7 breaking changes — the Markdown pipeline replacement, the removal of
+`@astrojs/db`, the reserved `src/fetch.ts` path, and the moved Container API
+entrypoints — do not apply to this project.
 
 ## 4. Target structure
 
@@ -88,8 +135,23 @@ src/
     index.astro
 ```
 
-`astro.config.mjs` sets `site: 'https://initphp.org'` so that canonical and Open Graph
-URLs resolve correctly. `base` stays at the default `/`.
+`astro.config.mjs`:
+
+```js
+import { defineConfig } from 'astro/config';
+import tailwindcss from '@tailwindcss/vite';
+
+export default defineConfig({
+  site: 'https://initphp.org',
+  output: 'static',
+  compressHTML: true,               // see §3.2 — v6 whitespace behaviour
+  integrations: [/* astro-icon */],
+  vite: { plugins: [tailwindcss()] },
+});
+```
+
+`site` makes canonical and Open Graph URLs resolve correctly. `base` stays at the
+default `/`.
 
 ## 5. Data model
 
@@ -181,7 +243,7 @@ small scripts.
 
 ```
 actions/checkout
-actions/setup-node (Node 24, npm cache)
+actions/setup-node (Node 24 — Astro 7 requires >= 22.12.0, npm cache)
 npm ci
 npm run build
 actions/upload-pages-artifact  (path: ./dist)
@@ -218,7 +280,9 @@ Expected repository size after migration: roughly 2 MB.
 
 The migration is complete only when all of the following hold:
 
-1. `npm run build` completes with no errors or warnings.
+1. `npm run build` completes with no errors or warnings under Astro 7 / Vite 8. This
+   is also the compatibility gate for `astro-icon`; if it fails there, take the
+   `src/icons/` fallback described in §3.2.
 2. **Visual parity.** The pre-migration `index.html` and the built `dist/index.html`
    are screenshotted side by side at 1440 px, 768 px, and 375 px viewport widths and
    compared. Any difference other than the `fa-grid-2` fix is a defect to correct.

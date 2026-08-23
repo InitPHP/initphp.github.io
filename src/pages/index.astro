@@ -1,12 +1,15 @@
 ---
+import { Icon } from 'astro-icon/components';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Navbar from '../components/Navbar.astro';
 import Hero from '../components/Hero.astro';
 import Stats from '../components/Stats.astro';
 import FeaturedCard from '../components/FeaturedCard.astro';
 import CategoryCard from '../components/CategoryCard.astro';
+import LibCard from '../components/LibCard.astro';
 import { featured } from '../data/featured';
 import { categories } from '../data/categories';
+import { libraries } from '../data/libraries';
 ---
 
 <BaseLayout>
@@ -33,6 +36,22 @@ import { categories } from '../data/categories';
     </div>
     <div class="categories-grid">
       {categories.map((c) => <CategoryCard {...c} />)}
+    </div>
+  </section>
+
+  <!-- All Libraries, baseline.html:1094-1296 -->
+  <section class="section" id="all-libraries">
+    <div class="section-header">
+      <h2>All Libraries</h2>
+      <p>Every package in the InitPHP ecosystem, ready to install via Composer.</p>
+    </div>
+    <div class="libraries-grid">
+      {libraries.map((l) => <LibCard {...l} />)}
+    </div>
+    <div class="view-all">
+      <a href="https://github.com/orgs/InitPHP/repositories" target="_blank" rel="noopener noreferrer">
+        View All Repositories <Icon name="fa6-solid:arrow-right" />
+      </a>
     </div>
   </section>
 </BaseLayout>
@@ -95,5 +114,48 @@ import { categories } from '../data/categories';
     .categories-grid {
       grid-template-columns: 1fr;
     }
+  }
+
+  /* .libraries-grid, baseline.html:466-472 */
+  .libraries-grid {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1rem;
+  }
+
+  /* Desktop-first: baseline's @media (max-width: 768px), baseline.html:748-750. */
+  @media (max-width: 768px) {
+    .libraries-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* .view-all, baseline.html:786-789 */
+  .view-all {
+    text-align: center;
+    margin-top: 3rem;
+  }
+
+  /* .view-all a, baseline.html:791-802. Unlayered scoped rule beats
+     global.css's @layer base `a { color }`, so no !important needed. */
+  .view-all a {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--color-accent-light);
+    font-weight: 600;
+    font-size: 0.95rem;
+    padding: 12px 28px;
+    border: 1px solid var(--color-accent);
+    border-radius: var(--radius-chip);
+    transition: all 0.2s;
+  }
+
+  /* .view-all a:hover, baseline.html:804-807 */
+  .view-all a:hover {
+    background: var(--color-accent);
+    color: #fff;
   }
 </style>

@@ -1,0 +1,77 @@
+---
+import { Icon } from 'astro-icon/components';
+import type { Library } from '../data/libraries';
+
+type Props = Library;
+const { name, repo, icon, desc } = Astro.props;
+---
+
+<a href={repo} target="_blank" rel="noopener noreferrer" class="lib-card">
+  <div class="lib-icon"><Icon name={icon} /></div>
+  <div class="lib-info">
+    <div class="lib-name">{name}</div>
+    <div class="lib-desc">{desc}</div>
+  </div>
+</a>
+
+<style>
+  /* .lib-card, baseline.html:474-484. Unlayered scoped rule beats
+     global.css's @layer base `a { color }`, so no !important needed. */
+  .lib-card {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.25rem 1.5rem;
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-card);
+    transition: border-color 0.2s, transform 0.2s;
+    color: var(--color-text-primary);
+  }
+
+  /* .lib-card:hover, baseline.html:486-490. Restates color so the tile's
+     text doesn't turn link-purple on hover. */
+  .lib-card:hover {
+    border-color: var(--color-accent);
+    transform: translateY(-2px);
+    color: var(--color-text-primary);
+  }
+
+  /* .lib-card .lib-icon, baseline.html:492-498. The `em`-sized SVG
+     astro-icon emits scales from this font-size, so no width/height
+     belongs here. Fixed width + flex-shrink: 0 keep every tile's text
+     starting at the same x-offset. */
+  .lib-card .lib-icon {
+    font-size: 1.5rem;
+    color: var(--color-accent);
+    width: 32px;
+    text-align: center;
+    flex-shrink: 0;
+  }
+
+  /* .lib-card .lib-info, baseline.html:500-502. min-width: 0 lets this
+     flex child shrink below its content's intrinsic width, which is what
+     makes the ellipsis below actually trigger instead of overflowing. */
+  .lib-card .lib-info {
+    min-width: 0;
+  }
+
+  /* .lib-card .lib-name, baseline.html:504-511 */
+  .lib-card .lib-name {
+    font-weight: 600;
+    font-size: 0.95rem;
+    font-family: var(--font-mono);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* .lib-card .lib-desc, baseline.html:513-518 */
+  .lib-card .lib-desc {
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+</style>

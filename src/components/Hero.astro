@@ -1,0 +1,131 @@
+---
+import { Icon } from 'astro-icon/components';
+import { libraries } from '../data/libraries';
+---
+
+<!--
+  .hero, baseline.html:201-206. `position: relative` is already carried by
+  the hero-glow utility (global.css), so it isn't repeated as a utility here.
+-->
+<section class="hero-glow overflow-hidden px-6 pt-40 pb-24 text-center max-md:pt-32 max-md:pb-16">
+  <!-- .hero-content, baseline.html:220-225 -->
+  <div class="relative z-[1] mx-auto max-w-[780px]">
+    <!-- .hero-badge, baseline.html:227-241 -->
+    <div class="mb-8 inline-flex items-center gap-2 rounded-full border border-[rgba(124,110,240,0.25)] bg-accent-glow px-4 py-1.5 text-[0.8rem] font-semibold tracking-[0.5px] text-accent-light uppercase">
+      <Icon name="fa6-brands:php" /> Open Source PHP Ecosystem
+    </div>
+    <h1>
+      Build with<br />
+      <span class="gradient-text">Modular PHP Libraries</span>
+    </h1>
+    <p class="hero-desc">
+      A collection of {libraries.length} lightweight, standalone PHP libraries. From database ORM to socket servers, each component is designed to work independently or together.
+    </p>
+    <div class="hero-actions">
+      <a href="https://github.com/InitPHP" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+        <Icon name="fa6-brands:github" /> Explore on GitHub
+      </a>
+      <!--
+        fa6-solid:table-cells-large replaces the baseline's fa-grid-2, a
+        FontAwesome Pro icon that renders as nothing on the live site. The
+        one deliberate rendered difference in this migration.
+      -->
+      <a href="#libraries" class="btn btn-secondary">
+        <Icon name="fa6-solid:table-cells-large" /> Browse Libraries
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* .hero h1, baseline.html:243-249 */
+  h1 {
+    font-size: clamp(2.5rem, 6vw, 4rem);
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+    letter-spacing: -0.02em;
+  }
+
+  /* .hero-desc, baseline.html:258-264 */
+  .hero-desc {
+    font-size: 1.2rem;
+    color: var(--color-text-secondary);
+    max-width: 600px;
+    margin: 0 auto 2.5rem;
+    line-height: 1.7;
+  }
+
+  /* .hero-actions, baseline.html:266-272 */
+  .hero-actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  /* .btn, baseline.html:274-286 */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    border-radius: var(--radius-chip);
+    font-size: 0.95rem;
+    font-weight: 600;
+    font-family: var(--font-sans);
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s;
+  }
+
+  /* .btn-primary, baseline.html:288-291 */
+  .btn-primary {
+    background: var(--color-accent);
+    color: #fff;
+  }
+
+  /* .btn-primary:hover, baseline.html:293-298 */
+  .btn-primary:hover {
+    background: var(--color-accent-light);
+    color: #fff;
+    transform: translateY(-1px);
+    box-shadow: 0 8px 30px rgba(124, 110, 240, 0.3);
+  }
+
+  /* .btn-secondary, baseline.html:300-304 */
+  .btn-secondary {
+    background: var(--color-bg-card);
+    color: var(--color-text-primary);
+    border: 1px solid var(--color-border);
+  }
+
+  /* .btn-secondary:hover, baseline.html:306-311 */
+  .btn-secondary:hover {
+    background: var(--color-bg-card-hover);
+    border-color: var(--color-accent);
+    color: var(--color-text-primary);
+    transform: translateY(-1px);
+  }
+
+  /* Desktop-first: baseline's @media (max-width: 480px), baseline.html:766-783. */
+  @media (max-width: 480px) {
+    h1 {
+      font-size: 2rem;
+    }
+
+    .hero-desc {
+      font-size: 1rem;
+    }
+
+    .hero-actions {
+      flex-direction: column;
+    }
+
+    .btn {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+</style>

@@ -3,10 +3,83 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Navbar from '../components/Navbar.astro';
 import Hero from '../components/Hero.astro';
 import Stats from '../components/Stats.astro';
+import FeaturedCard from '../components/FeaturedCard.astro';
+import { featured } from '../data/featured';
 ---
 
 <BaseLayout>
   <Navbar />
   <Hero />
   <Stats />
+
+  <!-- Featured Libraries, baseline.html:916-1007 -->
+  <section class="section featured" id="libraries">
+    <div class="section-header">
+      <h2>Featured Libraries</h2>
+      <p>Most popular and actively maintained components in the InitPHP ecosystem.</p>
+    </div>
+    <div class="featured-grid">
+      {featured.map((f) => <FeaturedCard {...f} />)}
+    </div>
+  </section>
 </BaseLayout>
+
+<style>
+  /* ===== SECTION COMMON =====, baseline.html:347-368. Shared by every
+     remaining section — Featured here, Categories/All-Libraries/Install in
+     Tasks 10-12. Their section shells are authored directly in this file
+     (per their briefs), and Astro scopes a <style> block to elements
+     literally written in the same file, so writing these four rules once
+     here is enough: Tasks 10-12 need only add their own <section
+     class="section ..."> markup below and it picks up this styling for
+     free, with no duplication in their own components. */
+  .section {
+    padding: 5rem 1.5rem;
+  }
+
+  .section-header {
+    text-align: center;
+    margin-bottom: 3.5rem;
+  }
+
+  .section-header h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    letter-spacing: -0.01em;
+  }
+
+  .section-header p {
+    color: var(--color-text-secondary);
+    max-width: 550px;
+    margin: 0 auto;
+  }
+
+  /* .featured, baseline.html:371-375 */
+  .featured {
+    background: var(--color-bg-secondary);
+    border-top: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  /* .featured-grid, baseline.html:378-384 */
+  .featured-grid {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 1.5rem;
+  }
+
+  /* Desktop-first: baseline's @media (max-width: 768px), baseline.html:704-764.
+     Only the .featured-grid override in that block (744-746) applies here;
+     the rest belongs to Navbar and other sections. Kept as a real CSS media
+     query (matching Stats.astro's precedent from Task 8) rather than
+     max-md: utilities, since .featured-grid is a class-name selector here,
+     not a utility-classed element. */
+  @media (max-width: 768px) {
+    .featured-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

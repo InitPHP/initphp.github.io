@@ -1,0 +1,115 @@
+---
+import { Icon } from 'astro-icon/components';
+import type { Featured } from '../data/featured';
+
+type Props = Featured;
+const { name, stars, tag, desc, code, docs } = Astro.props;
+---
+
+<article class="featured-card">
+  <div class="featured-card-header">
+    <span class="featured-card-name">{name}</span>
+    <span class="featured-card-stars"><Icon name="fa6-solid:star" /> {stars}</span>
+  </div>
+  <p>{desc}</p>
+  <div class="featured-card-footer">
+    <span class="tag">{tag}</span>
+    <div class="featured-card-links">
+      <a href={code} target="_blank" rel="noopener noreferrer"><Icon name="fa6-brands:github" /> Code</a>
+      <a href={docs} target="_blank" rel="noopener noreferrer"><Icon name="fa6-solid:book" /> Docs</a>
+    </div>
+  </div>
+</article>
+
+<style>
+  /* .featured-card, baseline.html:386-393 */
+  .featured-card {
+    position: relative;
+    padding: 2rem;
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-card);
+    transition: border-color 0.3s, transform 0.2s, box-shadow 0.3s;
+  }
+
+  /* .featured-card:hover, baseline.html:395-399 */
+  .featured-card:hover {
+    border-color: var(--color-accent);
+    transform: translateY(-3px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+  }
+
+  /* .featured-card-header, baseline.html:401-406 */
+  .featured-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+  }
+
+  /* .featured-card-name, baseline.html:408-413 */
+  .featured-card-name {
+    font-size: 1.2rem;
+    font-weight: 700;
+    font-family: var(--font-mono);
+    color: var(--color-text-primary);
+  }
+
+  /* .featured-card-stars, baseline.html:415-422 */
+  .featured-card-stars {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    color: #fbbf24;
+    font-size: 0.85rem;
+    font-weight: 600;
+  }
+
+  /* .featured-card p, baseline.html:424-429 */
+  .featured-card p {
+    color: var(--color-text-secondary);
+    font-size: 0.92rem;
+    line-height: 1.6;
+    margin-bottom: 1.25rem;
+  }
+
+  /* .featured-card-footer, baseline.html:431-435 */
+  .featured-card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  /* .tag, baseline.html:437-446 */
+  .tag {
+    display: inline-block;
+    padding: 4px 10px;
+    background: rgba(79, 140, 201, 0.12);
+    color: var(--color-php-blue);
+    font-size: 0.75rem;
+    font-weight: 600;
+    border-radius: 50px;
+    font-family: var(--font-mono);
+  }
+
+  /* .featured-card-links, baseline.html:448-451 */
+  .featured-card-links {
+    display: flex;
+    gap: 0.75rem;
+  }
+
+  /* .featured-card-links a, baseline.html:453-459. Unlayered scoped rule
+     beats global.css's @layer base `a { color }`, so no !important needed. */
+  .featured-card-links a {
+    color: var(--color-text-muted);
+    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  /* .featured-card-links a:hover, baseline.html:461-463 */
+  .featured-card-links a:hover {
+    color: var(--color-accent-light);
+  }
+</style>

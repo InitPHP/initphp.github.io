@@ -10,5 +10,8 @@
   },
   "devDependencies": {
     "node-html-parser": "^9.0.1"
+  },
+  "dependencies": {
+    "astro": "^7.2.4"
   }
 }

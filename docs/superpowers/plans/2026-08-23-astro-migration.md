@@ -656,22 +656,24 @@ Record in the commit message which strategy was taken; everything downstream is 
 FontAwesome `<i>` glyphs inherit their size from `font-size` and sit on the text baseline. Inline SVG does neither by default. Append to `src/styles/global.css`:
 
 ```css
-/* FontAwesome <i> glyphs sized themselves from font-size and sat on the
-   baseline. Reproduce that for inline SVG. height:1em with width:auto
-   preserves each icon's own aspect ratio — do not set both to 1em, that
-   squashes the non-square icons. */
+/* astro-icon already emits per-icon `width`/`height` in `em` (github is
+   0.97em x 1em, database 0.88em x 1em), so the SVG scales with the
+   inherited font-size and keeps its own aspect ratio — exactly how the
+   FontAwesome glyphs behaved. Do NOT set width or height here; that
+   would override those values and fight the library. Only the two
+   things inline SVG does not do for itself are needed. */
 [data-icon] {
   display: inline-block;
-  height: 1em;
-  width: auto;
   vertical-align: -0.125em;
 }
 ```
 
-- [ ] **Step 6: Rebuild and confirm aspect ratios are not forced square**
+`-0.125em` is FontAwesome's own SVG-mode baseline offset and is the starting value, not a proven one. Task 13 compares against the baseline screenshots and tunes it if the icons sit high or low.
 
-Run: `npm run build && grep -o '<svg[^>]*viewBox="[^"]*"' dist/index.html`
-Expected: the two icons report different `viewBox` values (FA's `github` and `database` have different widths). Confirm the CSS does not override both dimensions.
+- [ ] **Step 6: Rebuild and confirm the emitted dimensions survive**
+
+Run: `npm run build && grep -o '<svg[^>]*>' dist/index.html`
+Expected: `width="0.97em" height="1em" viewBox="0 0 496 512"` on the github icon and `width="0.88em" height="1em" viewBox="0 0 448 512"` on the database icon. Different widths, both in `em`. If either reports `width="1em"` on a non-square icon, or the CSS overrides these, the icons will be distorted.
 
 - [ ] **Step 7: Remove the probe**
 

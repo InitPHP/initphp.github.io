@@ -2,8 +2,20 @@
 import { Icon } from 'astro-icon/components';
 ---
 
+<!--
+  backdrop-filter is set via an inline `style` attribute, not a utility or
+  scoped <style> rule: this project's CSS pipeline runs everything through
+  Lightning CSS (Vite 8's default transformer) with no browser targets
+  configured, and Lightning CSS unconditionally folds
+  `-webkit-backdrop-filter` into the unprefixed property alone, in every
+  route tried (Tailwind's `backdrop-blur-*` utility, a component-scoped
+  <style> rule, an imported global .css rule, even an `@supports` guard).
+  An inline attribute skips that pipeline entirely, so it's the only way to
+  keep the baseline's `-webkit-backdrop-filter` working for Safari < 18.
+-->
 <nav
-  class="fixed top-0 right-0 left-0 z-[100] flex h-16 items-center border-b border-border bg-[rgba(10,14,23,0.85)] px-6 backdrop-blur-[20px]"
+  class="fixed top-0 right-0 left-0 z-[100] flex h-16 items-center border-b border-border bg-[rgba(10,14,23,0.85)] px-6"
+  style="-webkit-backdrop-filter: blur(20px); backdrop-filter: blur(20px);"
   role="navigation"
   aria-label="Main navigation"
 >

@@ -77,7 +77,17 @@ For each component task the procedure is mechanical and identical:
 
 1. Open the line range above and read every rule for the classes in that component.
 2. For each declaration, write the equivalent Tailwind utility on the element. Where no utility exists, use an arbitrary value (`bg-[rgba(10,14,23,0.85)]`, `w-[44px]`).
-3. The original stylesheet is **desktop-first** (`@media (max-width: 768px)` overrides). Tailwind is **mobile-first**. So the rule inside the `max-width` block becomes the unprefixed utility and the original desktop rule becomes the `md:`-prefixed one. Getting this backwards is the single most likely mistake in this migration — check it on every component that appears in the responsive block.
+3. The original stylesheet is **desktop-first**: the unprefixed rule is the desktop one and `@media (max-width: 768px)` / `@media (max-width: 480px)` blocks override it downward. **Mirror that structure exactly using Tailwind v4's `max-*` variants** — the desktop declaration stays unprefixed and the override becomes `max-md:` or `max-xs:`. Do **not** invert the stylesheet into mobile-first; inverting is the single most likely defect in this migration and buys nothing here.
+
+   ```
+   /* baseline */                          /* Tailwind */
+   .stats-grid { grid-template-columns: repeat(3, 1fr) }   grid-cols-3
+   @media (max-width: 768px) {
+     .stats-grid { grid-template-columns: 1fr }            max-md:grid-cols-1
+   }
+   ```
+
+   `max-md` is `< 48rem` and `max-xs` is `< 30rem`, against the baseline's `<= 768px` and `<= 480px`. The two differ only at exactly 768.00 and 480.00 CSS pixels. That is accepted.
 4. Do not invent, round, or "improve" any value. Copy pixel and colour values exactly.
 
 Correctness of the result is proved by Task 13's screenshot comparison, not by reading the classes.
@@ -290,6 +300,9 @@ dist/
 
 # Editors
 .idea/
+
+# SDD workspace
+.superpowers/
 ```
 
 - [ ] **Step 8: Commit**
@@ -360,7 +373,7 @@ export default defineConfig({
 {
   "extends": "astro/tsconfigs/strict",
   "include": [".astro/types.d.ts", "**/*"],
-  "exclude": ["dist"]
+  "exclude": ["dist", "node_modules"]
 }
 ```
 
@@ -1033,7 +1046,7 @@ const jsonLd = {
 
     <link rel="icon" type="image/png" href="/logos/initphp-icon-700.png" />
 
-    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)}></script>
   </head>
   <body>
     <slot />
@@ -1083,7 +1096,7 @@ git commit -m "feat: add BaseLayout reproducing the page head, meta and JSON-LD"
 
 Markup: `tests/fixtures/baseline.html:844-864`. CSS: `tests/fixtures/baseline.html:110-201` plus the `.nav-links` / `.mobile-toggle` overrides inside the 768px block at `704-786`. Script: `1351-1368`.
 
-Remember the mobile-first inversion: in the baseline the desktop nav is the default and the drawer is the `max-width: 768px` override. In Tailwind the drawer styles are unprefixed and the desktop row is `md:`.
+Keep the baseline's desktop-first structure: the horizontal nav stays unprefixed and the drawer override becomes `max-md:`. Do not invert to mobile-first.
 
 - [ ] **Step 2: Write `src/components/Navbar.astro`**
 
@@ -1477,7 +1490,15 @@ Translate `.lib-card`, `.lib-card:hover`, `.lib-icon`, `.lib-info`, `.lib-name` 
 
 - [ ] **Step 3: Render the section**
 
+`src/pages/index.astro` must now also import `Icon` — the "View All Repositories" link renders one directly rather than through a component:
+
 ```astro
+---
+import { Icon } from 'astro-icon/components';
+import LibCard from '../components/LibCard.astro';
+import { libraries } from '../data/libraries';
+---
+
 <section class="section" id="all-libraries">
   <div class="section-header">
     <h2>All Libraries</h2>
@@ -1666,24 +1687,25 @@ Content is proven identical. This task proves the rendering is too. This is wher
 
 ```bash
 npm run build
-npx astro preview &          # the new site
-python3 -m http.server 8081 --directory tests/fixtures &   # baseline.html
+npx astro preview &              # the new site, on the port it prints
+python3 -m http.server 8081 &    # from the repo root
 ```
 
-The baseline references `assets/fontawesome/` and `logos/` relatively; serve it from the repo root instead so those resolve:
+Open the built site at the `astro preview` URL, and the baseline at
+`http://localhost:8081/tests/fixtures/baseline.html`. Serving the baseline from the
+repo root (not from `tests/fixtures/`) is what makes its relative `assets/fontawesome/`
+references resolve, so its icons render.
 
-```bash
-python3 -m http.server 8081 &   # from the repo root, open /tests/fixtures/baseline.html
-```
-
-Since `logos/` has moved to `public/logos/` by now, the baseline's logo will 404. That is expected and is not a difference to chase — compare layout, type, colour and spacing, not that one image.
+`logos/` has moved to `public/logos/` by Task 2, so the baseline's logo image will 404.
+That is expected and is not a difference to chase — compare layout, type, colour and
+spacing, not that one image.
 
 - [ ] **Step 2: Capture and compare at three widths**
 
 For each of 1440px, 768px and 375px, screenshot both pages full-page and compare them side by side.
 
 Check specifically, in this order:
-1. **Responsive direction.** Is the mobile drawer showing at 375px and the horizontal nav at 1440px? An inverted `md:` prefix is the most likely defect and it is obvious at a glance.
+1. **Responsive direction.** Is the mobile drawer showing at 375px and the horizontal nav at 1440px? A `max-md:` written as `md:` inverts the whole breakpoint and is obvious at a glance.
 2. **Icon baseline and size.** Icons should sit level with their adjacent text and be the same visual size as the baseline's glyphs. If they float high or low, adjust `vertical-align` on `[data-icon]` in `global.css`.
 3. **Icon aspect ratio.** No icon should look horizontally squashed or stretched.
 4. Card grid column counts at each width.
@@ -1793,9 +1815,10 @@ jobs:
 
       - run: npm ci
 
-      - run: npm test
-
       - run: npm run build
+
+      # Parity tests read dist/index.html, so they must run after the build.
+      - run: npm test
 
       - uses: actions/upload-pages-artifact@v3
         with:
@@ -1812,7 +1835,7 @@ jobs:
         uses: actions/deploy-pages@v4
 ```
 
-`npm test` runs before the build step's artifact upload, so a content regression fails the deploy rather than shipping.
+`npm test` runs after the build and before the artifact upload, so a content regression fails the deploy rather than shipping. The parity suite reads `dist/index.html`; running it before the build would fail with `ENOENT`.
 
 - [ ] **Step 2: Validate the YAML locally**
 

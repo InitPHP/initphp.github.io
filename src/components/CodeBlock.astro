@@ -1,0 +1,111 @@
+---
+interface Props {
+  /** Shell command, rendered after a non-selectable "$" prompt. */
+  command: string;
+  label?: string;
+}
+
+const { command, label = 'terminal' } = Astro.props;
+---
+
+<div class="code-block">
+  <div class="code-block-header">
+    <span class="code-dot"></span>
+    <span class="code-dot"></span>
+    <span class="code-dot"></span>
+    <span>{label}</span>
+  </div>
+  <div class="code-block-body">
+    <code><span class="cmd-prefix">$ </span>{command}</code>
+    <!-- Rendered by the server but only wired up if the clipboard API is
+         available, so a browser without it never shows a dead button. -->
+    <button class="copy-btn" type="button" hidden data-copy={command} aria-label="Copy install command">
+      Copy
+    </button>
+  </div>
+</div>
+
+<style>
+  .code-block {
+    max-width: 640px;
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-card);
+    overflow: hidden;
+    text-align: left;
+  }
+
+  .code-block-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 20px;
+    background: var(--color-bg-card);
+    border-bottom: 1px solid var(--color-border);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+  }
+
+  .code-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--color-border);
+  }
+
+  .code-block-body {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1.25rem 1.5rem;
+  }
+
+  .code-block-body code {
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+    color: var(--color-text-primary);
+    overflow-wrap: anywhere;
+  }
+
+  .cmd-prefix {
+    color: var(--color-green);
+    user-select: none;
+  }
+
+  .copy-btn {
+    flex-shrink: 0;
+    padding: 6px 14px;
+    font-family: var(--font-sans);
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--color-text-secondary);
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-chip);
+    cursor: pointer;
+    transition: color 0.2s, border-color 0.2s;
+  }
+
+  .copy-btn:hover {
+    color: var(--color-text-primary);
+    border-color: var(--color-accent);
+  }
+</style>
+
+<script>
+  if (navigator.clipboard) {
+    for (const button of document.querySelectorAll<HTMLButtonElement>('.copy-btn')) {
+      button.hidden = false;
+      button.addEventListener('click', async () => {
+        await navigator.clipboard.writeText(button.dataset.copy ?? '');
+        const previous = button.textContent;
+        button.textContent = 'Copied';
+        setTimeout(() => {
+          button.textContent = previous;
+        }, 1500);
+      });
+    }
+  }
+</script>

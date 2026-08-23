@@ -2,64 +2,139 @@
 import '@fontsource-variable/inter';
 import '@fontsource-variable/jetbrains-mono';
 import '../styles/global.css';
+import { SITE, abs } from '../data/site';
 
-const title = 'InitPHP - Open Source PHP Libraries & Components';
-const description =
-  'InitPHP is an open source project providing modular, standalone PHP libraries for database, routing, caching, encryption, sockets, and more. Build robust PHP applications with lightweight, well-tested components.';
-const ogDescription =
-  'Modular, standalone PHP libraries for database, routing, caching, encryption, sockets, and more. Build robust PHP applications with lightweight, well-tested components.';
-const twitterDescription =
-  'Modular, standalone PHP libraries for database, routing, caching, encryption, sockets, and more.';
-const image = 'https://initphp.org/logos/initphp-icon-700.png';
+/*
+  Preloading the Inter latin subset by importing the file through Vite,
+  rather than hard-coding a path: @fontsource ships the woff2 under a stable
+  name but Astro emits it into /_astro/ with a content hash, so only the
+  bundler knows the final URL. Inter renders the h1 (the LCP element on
+  every page); JetBrains Mono is deliberately not preloaded because it is
+  only used below the fold and would compete for the same early bandwidth.
+*/
+import interLatin from '@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url';
 
-const jsonLd = {
-  '@context': 'https://schema.org',
+interface Props {
+  /** Full <title>. Falls back to the site title on the homepage. */
+  title?: string;
+  description?: string;
+  /** Site-relative path of this page, used for canonical and og:url. */
+  path?: string;
+  /** Absolute URL of the social card image. */
+  image?: string;
+  imageAlt?: string;
+  /** Extra JSON-LD nodes for this page, appended to the site-wide graph. */
+  jsonLd?: Record<string, unknown>[];
+  noindex?: boolean;
+}
+
+const {
+  title = SITE.title,
+  description = SITE.description,
+  path = '/',
+  image = abs('/og-image.png'),
+  imageAlt = 'InitPHP — modular, standalone PHP libraries',
+  jsonLd = [],
+  noindex = false,
+} = Astro.props;
+
+const canonical = abs(path);
+
+/*
+  Two nodes are emitted on every page and cross-referenced by @id, so that
+  a per-page node (SoftwareSourceCode, FAQPage, …) can point at the
+  publisher instead of restating it. A single flat @graph is used rather
+  than several sibling <script> blocks: consumers that follow @id references
+  resolve them within one graph without having to merge documents.
+*/
+const organization = {
   '@type': 'Organization',
-  name: 'InitPHP',
-  url: 'https://initphp.org',
-  logo: image,
-  description:
-    'InitPHP is an open source project providing modular, standalone PHP libraries for database, routing, caching, encryption, sockets, and more.',
-  foundingDate: '2022',
+  '@id': `${SITE.url}/#organization`,
+  name: SITE.name,
+  alternateName: 'InitPHP Project',
+  url: SITE.url,
+  logo: {
+    '@type': 'ImageObject',
+    url: abs('/logos/initphp-icon-700.png'),
+    width: 700,
+    height: 700,
+  },
+  description: SITE.description,
+  foundingDate: SITE.founded,
   founder: {
     '@type': 'Person',
-    name: 'Muhammet SAFAK',
-    url: 'https://github.com/muhammetsafak',
+    name: SITE.author.name,
+    url: SITE.author.url,
   },
-  sameAs: ['https://github.com/InitPHP'],
+  sameAs: [...SITE.sameAs],
+};
+
+const website = {
+  '@type': 'WebSite',
+  '@id': `${SITE.url}/#website`,
+  url: SITE.url,
+  name: SITE.name,
+  description: SITE.description,
+  inLanguage: SITE.lang,
+  publisher: { '@id': `${SITE.url}/#organization` },
+};
+
+const graph = {
+  '@context': 'https://schema.org',
+  '@graph': [organization, website, ...jsonLd],
 };
 ---
 
-<html lang="en" dir="ltr">
+<html lang={SITE.lang} dir="ltr">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    <meta name="author" content={SITE.author.name} />
+    {
+      /*
+        max-image-preview:large and the uncapped snippet/video previews opt
+        this site into full-size thumbnails and untruncated snippets in
+        search results and AI overviews; the bare "index, follow" it
+        replaced left both at the conservative default.
+      */
+    }
     <meta
-      name="keywords"
-      content="PHP, open source, PHP libraries, PHP components, database, router, ORM, cache, encryption, socket, PSR"
+      name="robots"
+      content={noindex
+        ? 'noindex, follow'
+        : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'}
     />
-    <meta name="author" content="Muhammet SAFAK" />
-    <meta name="robots" content="index, follow" />
-    <link rel="canonical" href="https://initphp.org/" />
+    <link rel="canonical" href={canonical} />
+    <meta name="theme-color" content={SITE.themeColor} />
 
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://initphp.org/" />
+    <meta property="og:url" content={canonical} />
     <meta property="og:title" content={title} />
-    <meta property="og:description" content={ogDescription} />
+    <meta property="og:description" content={description} />
     <meta property="og:image" content={image} />
-    <meta property="og:site_name" content="InitPHP" />
-    <meta property="og:locale" content="en_US" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={imageAlt} />
+    <meta property="og:site_name" content={SITE.name} />
+    <meta property="og:locale" content={SITE.locale} />
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
-    <meta name="twitter:description" content={twitterDescription} />
+    <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={image} />
+    <meta name="twitter:image:alt" content={imageAlt} />
 
-    <link rel="icon" type="image/png" href="/logos/initphp-icon-700.png" />
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
 
-    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)}></script>
+    <link rel="preload" href={interLatin} as="font" type="font/woff2" crossorigin />
+
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(graph)}></script>
   </head>
   <body>
     <slot />

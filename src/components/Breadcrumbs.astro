@@ -1,0 +1,66 @@
+---
+import { Icon } from 'astro-icon/components';
+
+/*
+  Visible breadcrumbs for the pages below the root. The matching
+  BreadcrumbList JSON-LD is emitted by the page itself from the same trail,
+  so the rendered path and the structured one always agree.
+*/
+export interface Crumb {
+  name: string;
+  /** Site-relative path; omitted on the current page. */
+  path?: string;
+}
+
+interface Props {
+  trail: Crumb[];
+}
+
+const { trail } = Astro.props;
+---
+
+<nav class="breadcrumbs" aria-label="Breadcrumb">
+  <ol>
+    {
+      trail.map((crumb, i) => (
+        <li>
+          {crumb.path ? <a href={crumb.path}>{crumb.name}</a> : <span aria-current="page">{crumb.name}</span>}
+          {i < trail.length - 1 && <Icon name="fa6-solid:chevron-right" aria-hidden="true" />}
+        </li>
+      ))
+    }
+  </ol>
+</nav>
+
+<style>
+  .breadcrumbs ol {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    font-size: 0.82rem;
+  }
+
+  .breadcrumbs li {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--color-text-muted);
+  }
+
+  .breadcrumbs a {
+    color: var(--color-text-secondary);
+  }
+
+  .breadcrumbs a:hover {
+    color: var(--color-accent-light);
+  }
+
+  .breadcrumbs svg {
+    font-size: 0.6rem;
+    color: var(--color-text-muted);
+  }
+</style>

@@ -1,19 +1,24 @@
 ---
 import { Icon } from 'astro-icon/components';
-import type { Category } from '../data/categories';
+import { librariesIn, type Category } from '../data/categories';
 
 type Props = Category;
-const { icon, title, desc, items } = Astro.props;
+const { slug, icon, title, desc } = Astro.props;
+
+// Members are looked up from the library catalogue rather than passed in:
+// the previous version restated every repo URL inside categories.ts, which
+// meant a category list could silently disagree with the catalogue below it.
+const items = librariesIn(slug);
 ---
 
-<div class="category-card">
+<div class="category-card" id={`category-${slug}`}>
   <div class="category-icon"><Icon name={icon} /></div>
   <h3>{title}</h3>
   <p>{desc}</p>
   <ul class="category-list">
-    {items.map((item) => (
+    {items.map((lib) => (
       <li>
-        <a href={item.repo} target="_blank" rel="noopener noreferrer" class="bullet-before">{item.label}</a>
+        <a href={`/libraries/${lib.slug}/`} class="bullet-before">{lib.name}</a>
       </li>
     ))}
   </ul>

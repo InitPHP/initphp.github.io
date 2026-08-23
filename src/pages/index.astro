@@ -8,14 +8,64 @@ import FeaturedCard from '../components/FeaturedCard.astro';
 import CategoryCard from '../components/CategoryCard.astro';
 import LibCard from '../components/LibCard.astro';
 import Install from '../components/Install.astro';
+import Faq from '../components/Faq.astro';
 import Footer from '../components/Footer.astro';
 import ScrollTop from '../components/ScrollTop.astro';
-import { featured } from '../data/featured';
 import { categories } from '../data/categories';
-import { libraries } from '../data/libraries';
+import { featured, lastReleased, libraries } from '../data/libraries';
+import { faqs } from '../data/faq';
+import { SITE, abs } from '../data/site';
+
+/*
+  Three page-level nodes on top of the site-wide Organization/WebSite pair:
+
+  - CollectionPage carries the one freshness signal the site has. The date
+    is the newest package release rather than the build timestamp, so it
+    only moves when something actually changed.
+  - ItemList enumerates all 27 packages by canonical URL, which is what
+    makes the catalogue legible as a set rather than as 27 loose links.
+  - FAQPage mirrors the visible FAQ section verbatim, from the same array.
+*/
+const webpage = {
+  '@type': 'CollectionPage',
+  '@id': `${SITE.url}/#webpage`,
+  url: `${SITE.url}/`,
+  name: SITE.title,
+  description: SITE.description,
+  isPartOf: { '@id': `${SITE.url}/#website` },
+  about: { '@id': `${SITE.url}/#organization` },
+  inLanguage: SITE.lang,
+  dateModified: lastReleased,
+};
+
+const itemList = {
+  '@type': 'ItemList',
+  '@id': `${SITE.url}/#libraries`,
+  name: 'InitPHP PHP libraries',
+  description: `All ${libraries.length} InitPHP Composer packages.`,
+  numberOfItems: libraries.length,
+  itemListOrder: 'https://schema.org/ItemListUnordered',
+  itemListElement: libraries.map((lib, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    name: lib.name,
+    url: abs(`/libraries/${lib.slug}/`),
+  })),
+};
+
+const faqPage = {
+  '@type': 'FAQPage',
+  '@id': `${SITE.url}/#faq`,
+  isPartOf: { '@id': `${SITE.url}/#website` },
+  mainEntity: faqs.map((item) => ({
+    '@type': 'Question',
+    name: item.q,
+    acceptedAnswer: { '@type': 'Answer', text: item.a },
+  })),
+};
 ---
 
-<BaseLayout>
+<BaseLayout jsonLd={[webpage, itemList, faqPage]}>
   <Navbar />
   <Hero />
   <Stats />
@@ -52,14 +102,19 @@ import { libraries } from '../data/libraries';
       {libraries.map((l) => <LibCard {...l} />)}
     </div>
     <div class="view-all">
+      <a href="/libraries/">
+        Browse all {libraries.length} libraries <Icon name="fa6-solid:arrow-right" />
+      </a>
       <a href="https://github.com/orgs/InitPHP/repositories" target="_blank" rel="noopener noreferrer">
-        View All Repositories <Icon name="fa6-solid:arrow-right" />
+        View on GitHub <Icon name="fa6-brands:github" />
       </a>
     </div>
   </section>
 
   <!-- Install, baseline.html:1298-1325 -->
   <Install />
+
+  <Faq />
 
   <!-- Footer, baseline.html:1327-1343 -->
   <Footer />
@@ -144,9 +199,14 @@ import { libraries } from '../data/libraries';
     }
   }
 
-  /* .view-all, baseline.html:786-789 */
+  /* .view-all, baseline.html:786-789. Now holds two buttons (the internal
+     catalogue link and the GitHub org link), so it centres them as a
+     wrapping flex row instead of relying on inline text-align. */
   .view-all {
-    text-align: center;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1rem;
     margin-top: 3rem;
   }
 

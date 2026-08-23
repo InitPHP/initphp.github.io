@@ -21,14 +21,25 @@ import { Icon } from 'astro-icon/components';
 >
   <div class="mx-auto flex w-full max-w-[1200px] items-center justify-between">
     <a href="/" class="flex items-center gap-[10px] text-[1.2rem] font-bold text-text-primary" aria-label="InitPHP Home">
-      <img src="/logos/initphp-icon-700.png" alt="InitPHP Logo" width="32" height="32" class="rounded-md" />
+      <img
+        src="/logos/initphp-icon-96.png"
+        alt="InitPHP logo"
+        width="32"
+        height="32"
+        fetchpriority="high"
+        class="rounded-md"
+      />
       <span class="text-accent-light">Init</span>PHP
     </a>
 
+    <!-- Root-relative hrefs, not bare fragments: this nav also renders on
+         /libraries/<slug>/, where "#categories" would resolve against the
+         library page and scroll nowhere. -->
     <ul id="navLinks" class="nav-links">
-      <li><a href="#libraries">Libraries</a></li>
-      <li><a href="#categories">Categories</a></li>
-      <li><a href="#install">Install</a></li>
+      <li><a href="/libraries/">Libraries</a></li>
+      <li><a href="/#categories">Categories</a></li>
+      <li><a href="/#install">Install</a></li>
+      <li><a href="/#faq">FAQ</a></li>
       <li>
         <a
           href="https://github.com/InitPHP"

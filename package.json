@@ -6,7 +6,9 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "test": "node --test 'tests/**/*.test.mjs'"
+    "test": "node --test 'tests/**/*.test.mjs'",
+    "icons": "node scripts/generate-icons.mjs",
+    "refresh:stars": "node scripts/refresh-stars.mjs"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.10",
@@ -16,6 +18,7 @@
     "typescript": "^6.0.3"
   },
   "dependencies": {
+    "@astrojs/sitemap": "^3.7.3",
     "@fontsource-variable/inter": "^5.3.0",
     "@fontsource-variable/jetbrains-mono": "^5.3.0",
     "@tailwindcss/vite": "^4.3.3",

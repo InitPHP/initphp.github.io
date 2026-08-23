@@ -3,14 +3,20 @@ import { Icon } from 'astro-icon/components';
 import type { Library } from '../data/libraries';
 
 type Props = Library;
-const { name, repo, icon, desc } = Astro.props;
+const { name, slug, pkg, icon, desc } = Astro.props;
 ---
 
-<a href={repo} target="_blank" rel="noopener noreferrer" class="lib-card">
+<!-- The tile now links to this site's own /libraries/<slug>/ page instead of
+     jumping straight to GitHub. Before, every link in the catalogue left the
+     domain, so the site had no internal link graph at all and nothing to
+     rank beyond the single homepage. The GitHub and Packagist links live on
+     the library page, one click further in. -->
+<a href={`/libraries/${slug}/`} class="lib-card" id={`lib-${slug}`}>
   <div class="lib-icon"><Icon name={icon} /></div>
   <div class="lib-info">
-    <div class="lib-name">{name}</div>
-    <div class="lib-desc">{desc}</div>
+    <h3 class="lib-name">{name}</h3>
+    <p class="lib-desc">{desc}</p>
+    <p class="lib-pkg">{pkg}</p>
   </div>
 </a>
 
@@ -56,20 +62,38 @@ const { name, repo, icon, desc } = Astro.props;
     min-width: 0;
   }
 
-  /* .lib-card .lib-name, baseline.html:504-511 */
+  /* .lib-card .lib-name, baseline.html:504-511. Now an <h3>, so the
+     browser's default heading margin and font-size have to be reset here;
+     the rendered result is unchanged from the <div> it replaced. */
   .lib-card .lib-name {
     font-weight: 600;
     font-size: 0.95rem;
     font-family: var(--font-mono);
+    margin: 0;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
   }
 
-  /* .lib-card .lib-desc, baseline.html:513-518 */
+  /* .lib-card .lib-desc, baseline.html:513-518. Now a <p>; margin reset for
+     the same reason as .lib-name above. */
   .lib-card .lib-desc {
     font-size: 0.8rem;
     color: var(--color-text-muted);
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* The Composer package name, added so all 27 install identifiers are
+     present in the homepage text rather than only the four in the terminal
+     box. Truncates like the two rules above rather than wrapping the tile. */
+  .lib-card .lib-pkg {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--color-accent-light);
+    margin: 4px 0 0;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;

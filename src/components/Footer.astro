@@ -13,9 +13,19 @@ const social = [
     <div class="footer-left">
       <a href="/" class="footer-brand">InitPHP</a>
       <span class="footer-copy">
-        &copy; 2022-2026 InitPHP Project. <a href="./license.txt" target="_blank">MIT License</a>. Created by <a href="https://github.com/muhammetsafak" target="_blank" rel="noopener noreferrer">Muhammet SAFAK</a>
+        <!-- Root-relative, not "./license.txt": this footer also renders on
+             /libraries/<slug>/, where the relative form resolved to
+             /libraries/<slug>/license.txt and 404'd. -->
+        &copy; 2022-2026 InitPHP Project. <a href="/license.txt" target="_blank">MIT License</a>. Created by <a href="https://github.com/muhammetsafak" target="_blank" rel="noopener noreferrer">Muhammet SAFAK</a>
       </span>
     </div>
+    <!-- A second internal link path to the two hub pages, present on every
+         page of the site. -->
+    <nav class="footer-nav" aria-label="Footer">
+      <a href="/libraries/">Libraries</a>
+      <a href="/#faq">FAQ</a>
+      <a href="/llms.txt">llms.txt</a>
+    </nav>
     <div class="footer-links">
       {social.map((s) => (
         <a href={s.href} target="_blank" rel="noopener noreferrer" title={s.label} aria-label={s.label}>
@@ -73,6 +83,22 @@ const social = [
     gap: 1.5rem;
   }
 
+  .footer-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.25rem;
+  }
+
+  .footer-nav a {
+    font-size: 0.85rem;
+    color: var(--color-text-secondary);
+    transition: color 0.2s;
+  }
+
+  .footer-nav a:hover {
+    color: var(--color-accent-light);
+  }
+
   /* .footer-links a, baseline.html:693-697 */
   .footer-links a {
     color: var(--color-text-muted);
@@ -96,6 +122,10 @@ const social = [
 
     .footer-left {
       flex-direction: column;
+    }
+
+    .footer-nav {
+      justify-content: center;
     }
   }
 </style>

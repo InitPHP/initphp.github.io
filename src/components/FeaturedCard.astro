@@ -1,21 +1,33 @@
 ---
 import { Icon } from 'astro-icon/components';
-import type { Featured } from '../data/featured';
+import type { Library } from '../data/libraries';
 
-type Props = Featured;
-const { name, stars, tag, desc, code, docs } = Astro.props;
+type Props = Library;
+const { name, slug, pkg, stars, php, psr, summary, repo, docs } = Astro.props;
 ---
 
 <article class="featured-card">
   <div class="featured-card-header">
-    <span class="featured-card-name">{name}</span>
-    <span class="featured-card-stars"><Icon name="fa6-solid:star" /> {stars}</span>
+    <h3 class="featured-card-name">
+      <a href={`/libraries/${slug}/`}>{name}</a>
+    </h3>
+    <span class="featured-card-stars" title={`${stars} GitHub stars`}>
+      <Icon name="fa6-solid:star" /> {stars}
+    </span>
   </div>
-  <p>{desc}</p>
+  <p>{summary}</p>
+  <!-- The Composer name is rendered here rather than left implicit: it is
+       the one fact a reader (or an answer engine) needs to act on the card,
+       and previously it appeared nowhere outside the four-line terminal
+       box further down the page. -->
+  <p class="featured-card-pkg"><code>composer require {pkg}</code></p>
   <div class="featured-card-footer">
-    <span class="tag">{tag}</span>
+    <span class="tags">
+      <span class="tag">PHP {php}</span>
+      {psr?.map((standard) => <span class="tag tag-psr">{standard}</span>)}
+    </span>
     <div class="featured-card-links">
-      <a href={code} target="_blank" rel="noopener noreferrer"><Icon name="fa6-brands:github" /> Code</a>
+      <a href={repo} target="_blank" rel="noopener noreferrer"><Icon name="fa6-brands:github" /> Code</a>
       <a href={docs} target="_blank" rel="noopener noreferrer"><Icon name="fa6-solid:book" /> Docs</a>
     </div>
   </div>
@@ -47,12 +59,25 @@ const { name, stars, tag, desc, code, docs } = Astro.props;
     margin-bottom: 1rem;
   }
 
-  /* .featured-card-name, baseline.html:408-413 */
+  /* .featured-card-name, baseline.html:408-413. Promoted from <span> to
+     <h3> so the six featured packages appear in the document outline;
+     margin is reset because the heading default would break the flex row. */
   .featured-card-name {
     font-size: 1.2rem;
     font-weight: 700;
     font-family: var(--font-mono);
     color: var(--color-text-primary);
+    margin: 0;
+  }
+
+  /* The whole heading is the link target, so it inherits the heading colour
+     instead of global.css's @layer base `a { color }`. */
+  .featured-card-name a {
+    color: inherit;
+  }
+
+  .featured-card-name a:hover {
+    color: var(--color-accent-light);
   }
 
   /* .featured-card-stars, baseline.html:415-422 */
@@ -73,11 +98,34 @@ const { name, stars, tag, desc, code, docs } = Astro.props;
     margin-bottom: 1.25rem;
   }
 
-  /* .featured-card-footer, baseline.html:431-435 */
+  /* The install line sits tighter to the description it belongs to than the
+     1.25rem the rule above gives every other paragraph. */
+  .featured-card-pkg {
+    margin-top: -0.75rem;
+  }
+
+  .featured-card-pkg code {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--color-accent-light);
+    overflow-wrap: anywhere;
+  }
+
+  /* .featured-card-footer, baseline.html:431-435. gap + wrap added because
+     the left slot now holds a PHP tag plus up to three PSR tags, which
+     overflowed the single-tag row the baseline assumed. */
   .featured-card-footer {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
   }
 
   /* .tag, baseline.html:437-446 */
@@ -90,6 +138,13 @@ const { name, stars, tag, desc, code, docs } = Astro.props;
     font-weight: 600;
     border-radius: 50px;
     font-family: var(--font-mono);
+  }
+
+  /* PSR badges reuse .tag's shape but the accent hue, so a standards claim
+     reads as distinct from the PHP version requirement next to it. */
+  .tag-psr {
+    background: var(--color-accent-glow);
+    color: var(--color-accent-light);
   }
 
   /* .featured-card-links, baseline.html:448-451 */

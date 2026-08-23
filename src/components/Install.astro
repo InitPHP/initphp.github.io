@@ -1,10 +1,9 @@
 ---
-const commands = [
-  'composer require initphp/database',
-  'composer require initphp/router',
-  'composer require initphp/socket',
-  'composer require initphp/cache',
-];
+import { featured, libraries } from '../data/libraries';
+
+// Derived from the featured set rather than hard-coded, so the four sample
+// commands can never name a package that has been renamed or retired.
+const commands = featured.slice(0, 4).map((lib) => `composer require ${lib.pkg}`);
 ---
 
 <!-- .section/.section-header* are NOT defined in this file's <style> block.
@@ -30,12 +29,38 @@ const commands = [
       ))}
     </div>
   </div>
+  <p class="install-note">
+    Every package follows the same pattern — <code>composer require initphp/&lt;package&gt;</code>. See the
+    exact command, PHP requirement and documentation for each of the {libraries.length} libraries in the
+    <a href="/libraries/">library catalogue</a>.
+  </p>
 </section>
 
 <style>
   /* .install, baseline.html:600-602 */
   .install {
     text-align: center;
+  }
+
+  /* Spells out the install pattern for the 23 packages the terminal box
+     above does not have room to name, and hands the reader the catalogue. */
+  .install-note {
+    max-width: 600px;
+    margin: 1.5rem auto 0;
+    font-size: 0.9rem;
+    line-height: 1.7;
+    color: var(--color-text-secondary);
+  }
+
+  .install-note code {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--color-accent-light);
+  }
+
+  .install-note a {
+    color: var(--color-accent-light);
+    font-weight: 600;
   }
 
   /* .install-box, baseline.html:604-611 */

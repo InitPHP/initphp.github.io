@@ -1,0 +1,14 @@
+# https://initphp.org/robots.txt
+# Everything on this site is public documentation for open source packages;
+# there is nothing here that should stay out of an index or out of a model.
+
+User-agent: *
+Allow: /
+
+# Cloudflare fronts this origin and appends its content-signal preamble to
+# whatever robots.txt the origin serves. Declaring the signals here keeps
+# them explicit and under this repository's control instead of defaulting to
+# "neither granted nor restricted".
+Content-Signal: search=yes, ai-input=yes, ai-train=yes
+
+Sitemap: https://initphp.org/sitemap-index.xml

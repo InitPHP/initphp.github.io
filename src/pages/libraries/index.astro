@@ -1,0 +1,167 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Navbar from '../../components/Navbar.astro';
+import Footer from '../../components/Footer.astro';
+import ScrollTop from '../../components/ScrollTop.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import LibCard from '../../components/LibCard.astro';
+import { categories, librariesIn } from '../../data/categories';
+import { lastReleased, libraries } from '../../data/libraries';
+import { SITE, abs } from '../../data/site';
+
+/*
+  The hub the 27 package pages hang off. The homepage lists them too, but a
+  hub at a stable /libraries/ URL gives the set one canonical parent to link
+  from, and gives the breadcrumb trail on each package page a real middle
+  step instead of a fabricated one.
+*/
+const path = '/libraries/';
+const title = `All ${libraries.length} InitPHP PHP Libraries`;
+const description = `Every InitPHP Composer package, grouped by purpose: database, HTTP and routing, security, networking, configuration and utilities. ${libraries.length} MIT licensed libraries.`;
+
+const webpage = {
+  '@type': 'CollectionPage',
+  '@id': `${abs(path)}#webpage`,
+  url: abs(path),
+  name: title,
+  description,
+  isPartOf: { '@id': `${SITE.url}/#website` },
+  breadcrumb: { '@id': `${abs(path)}#breadcrumb` },
+  inLanguage: SITE.lang,
+  dateModified: lastReleased,
+};
+
+const breadcrumbs = {
+  '@type': 'BreadcrumbList',
+  '@id': `${abs(path)}#breadcrumb`,
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE.url}/` },
+    { '@type': 'ListItem', position: 2, name: 'Libraries', item: abs(path) },
+  ],
+};
+
+const itemList = {
+  '@type': 'ItemList',
+  '@id': `${abs(path)}#list`,
+  name: title,
+  numberOfItems: libraries.length,
+  itemListElement: libraries.map((lib, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    name: `InitPHP ${lib.name}`,
+    url: abs(`/libraries/${lib.slug}/`),
+  })),
+};
+---
+
+<BaseLayout
+  title={`${title} — InitPHP`}
+  description={description}
+  path={path}
+  jsonLd={[webpage, breadcrumbs, itemList]}
+>
+  <Navbar />
+
+  <main class="catalogue">
+    <Breadcrumbs trail={[{ name: 'Home', path: '/' }, { name: 'Libraries' }]} />
+
+    <header class="catalogue-header">
+      <h1>All {libraries.length} InitPHP libraries</h1>
+      <p>
+        Every package is published separately under the <code>initphp</code> vendor namespace on Packagist,
+        released under the MIT license, and usable on its own. Pick a library to see its install command,
+        PHP requirement and documentation.
+      </p>
+    </header>
+
+    {
+      categories.map((category) => {
+        const members = librariesIn(category.slug);
+        return (
+          <section class="catalogue-section" id={category.slug}>
+            <h2>{category.title}</h2>
+            <p class="catalogue-desc">{category.desc}</p>
+            <div class="libraries-grid">
+              {members.map((lib) => (
+                <LibCard {...lib} />
+              ))}
+            </div>
+          </section>
+        );
+      })
+    }
+  </main>
+
+  <Footer />
+  <ScrollTop />
+</BaseLayout>
+
+<style>
+  .catalogue {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 8rem 1.5rem 5rem;
+  }
+
+  .catalogue-header {
+    margin: 1.5rem 0 3.5rem;
+    max-width: 720px;
+  }
+
+  h1 {
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    margin: 0 0 1rem;
+  }
+
+  .catalogue-header p {
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: var(--color-text-secondary);
+    margin: 0;
+  }
+
+  .catalogue-header code {
+    font-family: var(--font-mono);
+    color: var(--color-accent-light);
+  }
+
+  .catalogue-section {
+    margin-bottom: 3.5rem;
+    /* Anchored from the homepage's category cards, so the fixed navbar must
+       not cover the heading when one is jumped to. */
+    scroll-margin-top: 5rem;
+  }
+
+  .catalogue-section h2 {
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin: 0 0 0.4rem;
+  }
+
+  .catalogue-desc {
+    font-size: 0.9rem;
+    color: var(--color-text-secondary);
+    margin: 0 0 1.5rem;
+  }
+
+  /* Same tile grid as the homepage's All Libraries section
+     (baseline.html:466-472). */
+  .libraries-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1rem;
+  }
+
+  @media (max-width: 768px) {
+    .catalogue {
+      padding-top: 6rem;
+    }
+
+    .libraries-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

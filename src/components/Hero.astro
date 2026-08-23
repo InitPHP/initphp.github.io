@@ -19,12 +19,17 @@ import { libraries } from '../data/libraries';
     <div class="mb-8 inline-flex items-center gap-2 rounded-full border border-[rgba(124,110,240,0.25)] bg-accent-glow px-4 py-1.5 text-[0.8rem] font-semibold tracking-[0.5px] text-accent-light uppercase">
       <Icon name="fa6-brands:php" /> Open Source PHP Ecosystem
     </div>
+    <!-- The brand name leads the h1. It previously read "Build with / Modular
+         PHP Libraries", which put the page's single strongest heading to work
+         on a generic phrase and left "InitPHP" out of it entirely. -->
     <h1>
-      Build with<br />
+      InitPHP<br />
       <span class="gradient-text">Modular PHP Libraries</span>
     </h1>
     <p class="hero-desc">
-      A collection of {libraries.length} lightweight, standalone PHP libraries. From database ORM to socket servers, each component is designed to work independently or together.
+      A collection of {libraries.length} lightweight, standalone PHP libraries — from database ORM to socket
+      servers. Every package is MIT licensed, PSR compliant where a standard exists, and installs on its
+      own with Composer.
     </p>
     <div class="hero-actions">
       <a href="https://github.com/InitPHP" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
@@ -35,7 +40,7 @@ import { libraries } from '../data/libraries';
         FontAwesome Pro icon that renders as nothing on the live site. The
         one deliberate rendered difference in this migration.
       -->
-      <a href="#libraries" class="btn btn-secondary">
+      <a href="/libraries/" class="btn btn-secondary">
         <Icon name="fa6-solid:table-cells-large" /> Browse Libraries
       </a>
     </div>

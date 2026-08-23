@@ -1,0 +1,73 @@
+---
+import { faqs } from '../data/faq';
+
+/*
+  Answers are rendered as plain visible text rather than inside a collapsed
+  <details>. The section exists to be read and to be quoted — by a snippet,
+  an AI overview, or a person — and visible text is the form every consumer
+  handles identically. The same array also backs the FAQPage JSON-LD emitted
+  by index.astro, so the two copies cannot drift.
+*/
+---
+
+<section class="section faq" id="faq">
+  <div class="section-header">
+    <h2>Frequently Asked Questions</h2>
+    <p>What InitPHP is, how to install it, and what it requires.</p>
+  </div>
+  <div class="faq-grid">
+    {
+      faqs.map((item) => (
+        <article class="faq-item">
+          <h3>{item.q}</h3>
+          <p>{item.a}</p>
+        </article>
+      ))
+    }
+  </div>
+</section>
+
+<style>
+  .faq {
+    background: var(--color-bg-secondary);
+    border-top: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .faq-grid {
+    max-width: 1000px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .faq-item {
+    padding: 1.75rem;
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-card);
+  }
+
+  .faq-item h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--color-text-primary);
+    margin: 0 0 0.6rem;
+  }
+
+  .faq-item p {
+    font-size: 0.9rem;
+    line-height: 1.65;
+    color: var(--color-text-secondary);
+    margin: 0;
+  }
+
+  /* Matches the single-column breakpoint every other grid on the page uses
+     (baseline.html:704-764), including the 768px boundary itself. */
+  @media (max-width: 768px) {
+    .faq-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

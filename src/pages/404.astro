@@ -1,0 +1,115 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+import { libraries } from '../data/libraries';
+
+/*
+  GitHub Pages serves /404.html for any unmatched path. It is marked
+  noindex: it is a real 200-rendered page as far as the build is concerned,
+  and it is excluded from the sitemap in astro.config.mjs for the same
+  reason.
+*/
+---
+
+<BaseLayout
+  title="Page not found — InitPHP"
+  description="That page does not exist. Browse the InitPHP library catalogue instead."
+  path="/404"
+  noindex
+>
+  <Navbar />
+
+  <main class="notfound">
+    <p class="notfound-code">404</p>
+    <h1>This page does not exist</h1>
+    <p class="notfound-text">
+      The link may be out of date, or the package may have been archived. All {libraries.length} current
+      InitPHP libraries are listed in the catalogue.
+    </p>
+    <div class="notfound-actions">
+      <a href="/libraries/" class="btn btn-primary">Browse libraries</a>
+      <a href="/" class="btn btn-secondary">Back to home</a>
+    </div>
+  </main>
+
+  <Footer />
+</BaseLayout>
+
+<style>
+  .notfound {
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 12rem 1.5rem 8rem;
+    text-align: center;
+  }
+
+  .notfound-code {
+    font-family: var(--font-mono);
+    font-size: 3rem;
+    font-weight: 800;
+    color: var(--color-accent);
+    margin: 0 0 1rem;
+  }
+
+  h1 {
+    font-size: clamp(1.6rem, 4vw, 2.2rem);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin: 0 0 1rem;
+  }
+
+  .notfound-text {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: var(--color-text-secondary);
+    margin: 0 0 2.5rem;
+  }
+
+  .notfound-actions {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  /* .btn, baseline.html:274-311. Repeated rather than shared because Astro
+     scopes component styles and these two buttons live only on this page. */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    border-radius: var(--radius-chip);
+    font-size: 0.95rem;
+    font-weight: 600;
+    transition: all 0.2s;
+  }
+
+  .btn-primary {
+    background: var(--color-accent);
+    color: #fff;
+  }
+
+  .btn-primary:hover {
+    background: var(--color-accent-light);
+    color: #fff;
+  }
+
+  .btn-secondary {
+    background: var(--color-bg-card);
+    color: var(--color-text-primary);
+    border: 1px solid var(--color-border);
+  }
+
+  .btn-secondary:hover {
+    background: var(--color-bg-card-hover);
+    border-color: var(--color-accent);
+  }
+
+  @media (max-width: 768px) {
+    .notfound {
+      padding-top: 9rem;
+    }
+  }
+</style>

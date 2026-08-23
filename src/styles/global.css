@@ -58,6 +58,41 @@
   }
 }
 
+/* --- shared cross-file rules ---
+   .section/.section-header* (baseline.html:347-368) are reused by every
+   section from Featured onward (Task 9: Featured; Task 10: Categories;
+   Task 11: All Libraries; Task 12: Install). Some of those section shells
+   live directly in src/pages/index.astro, but Install's does not — it's
+   authored inside its own src/components/Install.astro. Astro's scoped
+   <style> only reaches elements literally written in the same file, so a
+   block scoped to index.astro cannot style Install's markup. Layered here
+   as `components` (Tailwind's own layer order is theme, base, components,
+   utilities) so a Tailwind utility can still override one of these rules
+   if a later task needs to, while still beating the `base` reset above. */
+@layer components {
+  .section {
+    padding: 5rem 1.5rem;
+  }
+
+  .section-header {
+    text-align: center;
+    margin-bottom: 3.5rem;
+  }
+
+  .section-header h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    letter-spacing: -0.01em;
+  }
+
+  .section-header p {
+    color: var(--color-text-secondary);
+    max-width: 550px;
+    margin: 0 auto;
+  }
+}
+
 /* --- rules with no utility equivalent --- */
 
 /* Radial glow behind the hero. baseline.html:208-218 */

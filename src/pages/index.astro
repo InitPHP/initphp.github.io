@@ -25,35 +25,13 @@ import { featured } from '../data/featured';
 </BaseLayout>
 
 <style>
-  /* ===== SECTION COMMON =====, baseline.html:347-368. Shared by every
-     remaining section — Featured here, Categories/All-Libraries/Install in
-     Tasks 10-12. Their section shells are authored directly in this file
-     (per their briefs), and Astro scopes a <style> block to elements
-     literally written in the same file, so writing these four rules once
-     here is enough: Tasks 10-12 need only add their own <section
-     class="section ..."> markup below and it picks up this styling for
-     free, with no duplication in their own components. */
-  .section {
-    padding: 5rem 1.5rem;
-  }
-
-  .section-header {
-    text-align: center;
-    margin-bottom: 3.5rem;
-  }
-
-  .section-header h2 {
-    font-size: 2rem;
-    font-weight: 700;
-    margin-bottom: 0.75rem;
-    letter-spacing: -0.01em;
-  }
-
-  .section-header p {
-    color: var(--color-text-secondary);
-    max-width: 550px;
-    margin: 0 auto;
-  }
+  /* .section/.section-header* (baseline.html:347-368) are NOT defined here.
+     They're shared by every remaining section (Featured/Categories/
+     All-Libraries/Install), and Task 12's Install section is authored in
+     its own component file, outside this file's Astro style scope — so
+     they live unscoped in src/styles/global.css's `@layer components`
+     instead, where every section, regardless of which file renders it,
+     can reach them. See that file for the rules and the full reasoning. */
 
   /* .featured, baseline.html:371-375 */
   .featured {

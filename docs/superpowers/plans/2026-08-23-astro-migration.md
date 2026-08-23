@@ -1748,22 +1748,39 @@ Content is proven identical. This task proves the rendering is too. This is wher
 **Files:**
 - Modify: any component whose styles are wrong.
 
-- [ ] **Step 1: Serve both versions**
+- [ ] **Step 1: Serve both versions — the paths matter**
+
+Both of these are wrong in ways that waste a whole comparison pass, so use exactly this:
 
 ```bash
 npm run build
-npx astro preview &              # the new site, on the port it prints
-python3 -m http.server 8081 &    # from the repo root
+python3 -m http.server 8098 --directory dist &   # the built site, AT A ROOT
+python3 -m http.server 8099 &                    # the repo root, for the baseline
 ```
 
-Open the built site at the `astro preview` URL, and the baseline at
-`http://localhost:8081/tests/fixtures/baseline.html`. Serving the baseline from the
-repo root (not from `tests/fixtures/`) is what makes its relative `assets/fontawesome/`
-references resolve, so its icons render.
+Open the built site at `http://localhost:8098/` and the baseline at
+`http://localhost:8099/index.html`.
 
-`logos/` has moved to `public/logos/` by Task 2, so the baseline's logo image will 404.
-That is expected and is not a difference to chase — compare layout, type, colour and
-spacing, not that one image.
+**The built site must be served at a root, not as a subpath.** Astro emits a
+root-absolute stylesheet link (`/_astro/index.*.css`). Serving `dist/index.html`
+from `http://localhost:8099/dist/index.html` makes that 404 and the page renders
+with no CSS at all — which looks like a catastrophic regression and is purely a
+serving artifact.
+
+**The baseline must be `/index.html` at the repo root, not
+`/tests/fixtures/baseline.html`.** The two files are byte-identical, but the
+fixture's relative `assets/fontawesome/…` href resolves against
+`/tests/fixtures/`, 404s, and every icon in the baseline silently disappears —
+so you would "discover" that the migration added icons everywhere. This is also
+why Task 13 must run before Task 14, which deletes `index.html`.
+
+Two differences are expected and are not defects to chase:
+- The baseline's logo image 404s, because Task 2 moved `logos/` into `public/`.
+  The built page shows it correctly.
+- The baseline's "Browse Libraries" button has no icon; the built page has the
+  `table-cells-large` grid icon. That is the intentional `fa-grid-2` fix. Because
+  the button pair is centred, the added icon widens the second button and shifts
+  both a few pixels left. Expected.
 
 - [ ] **Step 2: Capture and compare at three widths**
 

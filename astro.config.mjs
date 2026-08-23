@@ -1,4 +1,5 @@
 import { defineConfig } from 'astro/config';
+import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
   site: 'https://initphp.org',
@@ -6,4 +7,7 @@ export default defineConfig({
   // Astro 7 defaults compressHTML to 'jsx', which strips newline-adjacent
   // whitespace and would glue icons to their labels. Keep v6 behaviour.
   compressHTML: true,
+  vite: {
+    plugins: [tailwindcss()],
+  },
 });

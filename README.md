@@ -9,6 +9,19 @@ npm install
 npm run dev
 ```
 
+## Styling conventions
+
+- Use Tailwind utilities for simple layout and spacing on a component's outer
+  elements.
+- Write a scoped `<style>` rule for anything with more than about four
+  declarations, or that deserves a name worth reading.
+- Rules shared across multiple files go in `src/styles/global.css`, under
+  `@layer components`.
+- Never set the same property both ways on the same element. Astro's scoped
+  styles are unlayered, so they beat both `@layer base` and Tailwind
+  utilities — a utility and a scoped rule targeting the same property do not
+  resolve by specificity the way you'd expect; pick one per property.
+
 ## Test
 
 ```sh

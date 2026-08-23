@@ -43,6 +43,8 @@ export function extractSnapshot(html) {
     anchors: body.querySelectorAll('a').map((a) => ({
       href: normPath(a.getAttribute('href')),
       text: norm(a.text),
+      target: a.getAttribute('target') ?? null,
+      rel: a.getAttribute('rel') ?? null,
     })),
     images: body.querySelectorAll('img').map((img) => ({
       src: normPath(img.getAttribute('src')),

@@ -79,6 +79,8 @@ For each component task the procedure is mechanical and identical:
 2. For each declaration, write the equivalent Tailwind utility on the element. Where no utility exists, use an arbitrary value (`bg-[rgba(10,14,23,0.85)]`, `w-[44px]`).
 3. The original stylesheet is **desktop-first**: the unprefixed rule is the desktop one and `@media (max-width: 768px)` / `@media (max-width: 480px)` blocks override it downward. **Mirror that structure exactly using Tailwind v4's `max-*` variants** — the desktop declaration stays unprefixed and the override becomes `max-md:` or `max-xs:`. Do **not** invert the stylesheet into mobile-first; inverting is the single most likely defect in this migration and buys nothing here.
 
+   *(Note, added during implementation: this `max-*` variant approach was rejected. All eight responsive overrides in the branch use raw `@media` blocks instead, because they match the baseline's inclusive `<=` boundaries exactly — see the next paragraph, and the comments in `Hero.astro` and `Navbar.astro`.)*
+
    ```
    /* baseline */                          /* Tailwind */
    .stats-grid { grid-template-columns: repeat(3, 1fr) }   grid-cols-3
@@ -88,6 +90,8 @@ For each component task the procedure is mechanical and identical:
    ```
 
    `max-md` is `< 48rem` and `max-xs` is `< 30rem`, against the baseline's `<= 768px` and `<= 480px`. The two differ only at exactly 768.00 and 480.00 CSS pixels. That is accepted.
+
+   *(Note, added during implementation: this off-by-one-pixel difference is not actually present in the branch — every responsive override was implemented as a raw `@media` block, not a `max-*` variant, precisely to hit the baseline's boundary exactly.)*
 4. Do not invent, round, or "improve" any value. Copy pixel and colour values exactly.
 
 Two things Task 7 discovered the hard way, which every later component task inherits:
@@ -1172,6 +1176,8 @@ git commit -m "feat: add BaseLayout reproducing the page head, meta and JSON-LD"
 Markup: `tests/fixtures/baseline.html:844-864`. CSS: `tests/fixtures/baseline.html:110-201` plus the `.nav-links` / `.mobile-toggle` overrides inside the 768px block at `704-786`. Script: `1351-1368`.
 
 Keep the baseline's desktop-first structure: the horizontal nav stays unprefixed and the drawer override becomes `max-md:`. Do not invert to mobile-first.
+
+*(Note, added during implementation: the drawer override was implemented as a raw `@media (max-width: 768px)` block, not `max-md:`, because `max-md:` excludes exactly 768px while the baseline's boundary is inclusive — see the comment in `Navbar.astro`.)*
 
 - [ ] **Step 2: Write `src/components/Navbar.astro`**
 

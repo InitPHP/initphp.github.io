@@ -51,15 +51,13 @@ const social = [
     gap: 1.5rem;
   }
 
-  /* .footer-brand, baseline.html:677-681. Kept `!important` as a faithful
-     transcription, matching Navbar's .nav-github precedent (baseline.html:
-     172-182) — it is redundant now that Astro's unlayered scoped styles
-     already beat `@layer base`'s `a { color }`, but Task 6/7 chose to keep
-     it there rather than drop it, and this component follows that choice
-     for consistency rather than re-litigating it per component. */
+  /* .footer-brand, baseline.html:677-681. Unlayered scoped rule beats
+     global.css's @layer base `a { color }`, so no !important needed here —
+     unlike .nav-github (Navbar.astro), which competes with a
+     higher-specificity sibling rule (.nav-links a) and does need it. */
   .footer-brand {
     font-weight: 700;
-    color: var(--color-text-primary) !important;
+    color: var(--color-text-primary);
     font-size: 1.05rem;
   }
 

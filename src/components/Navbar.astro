@@ -74,7 +74,11 @@ import { Icon } from 'astro-icon/components';
     color: var(--color-text-primary);
   }
 
-  /* .nav-github, baseline.html:172-182 */
+  /* .nav-github, baseline.html:172-182. !important is required here:
+     .nav-links a (0,4,1) outranks .nav-github (0,2,0), both unlayered, so
+     specificity — not layering — decides. Verified: removing it renders
+     #94a3b8 (--color-text-secondary) instead of #e2e8f0
+     (--color-text-primary). Do not drop it. */
   .nav-github {
     display: inline-flex;
     align-items: center;
@@ -107,8 +111,11 @@ import { Icon } from 'astro-icon/components';
     cursor: pointer;
   }
 
-  /* Desktop-first: the baseline's @media (max-width: 768px) override,
-     baseline.html:705-726, mirrored with max-md: semantics. */
+  /* Desktop-first: baseline's @media (max-width: 768px) override,
+     baseline.html:705-726. A real media query is used, not Tailwind's
+     max-md: variant: max-md: compiles to (width < 768px), which excludes
+     exactly 768px, while the baseline's media query includes it. Matches
+     the reasoning in Hero.astro. */
   @media (max-width: 768px) {
     .nav-links {
       display: none;

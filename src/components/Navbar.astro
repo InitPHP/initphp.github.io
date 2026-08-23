@@ -1,0 +1,141 @@
+---
+import { Icon } from 'astro-icon/components';
+---
+
+<nav
+  class="fixed top-0 right-0 left-0 z-[100] flex h-16 items-center border-b border-border bg-[rgba(10,14,23,0.85)] px-6 backdrop-blur-[20px]"
+  role="navigation"
+  aria-label="Main navigation"
+>
+  <div class="mx-auto flex w-full max-w-[1200px] items-center justify-between">
+    <a href="/" class="flex items-center gap-[10px] text-[1.2rem] font-bold text-text-primary!" aria-label="InitPHP Home">
+      <img src="/logos/initphp-icon-700.png" alt="InitPHP Logo" width="32" height="32" class="rounded-md" />
+      <span class="text-accent-light">Init</span>PHP
+    </a>
+
+    <ul id="navLinks" class="nav-links">
+      <li><a href="#libraries">Libraries</a></li>
+      <li><a href="#categories">Categories</a></li>
+      <li><a href="#install">Install</a></li>
+      <li>
+        <a
+          href="https://github.com/InitPHP"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="nav-github"
+        >
+          <Icon name="fa6-brands:github" /> GitHub
+        </a>
+      </li>
+    </ul>
+
+    <button
+      id="mobileToggle"
+      class="mobile-toggle"
+      aria-label="Toggle menu"
+      aria-expanded="false"
+    >
+      <Icon name="fa6-solid:bars" />
+    </button>
+  </div>
+</nav>
+
+<style>
+  /* .nav-links, baseline.html:154-159 */
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  /* baseline.html:161-166 */
+  .nav-links a {
+    color: var(--color-text-secondary);
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: color 0.2s;
+  }
+
+  /* baseline.html:168-170 */
+  .nav-links a:hover {
+    color: var(--color-text-primary);
+  }
+
+  /* .nav-github, baseline.html:172-182 */
+  .nav-github {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-chip);
+    color: var(--color-text-primary) !important;
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition:
+      background 0.2s,
+      border-color 0.2s;
+  }
+
+  /* baseline.html:184-187 */
+  .nav-github:hover {
+    background: var(--color-bg-card-hover);
+    border-color: var(--color-accent);
+  }
+
+  /* .mobile-toggle, baseline.html:189-196 */
+  .mobile-toggle {
+    display: none;
+    background: none;
+    border: none;
+    color: var(--color-text-primary);
+    font-size: 1.5rem;
+    cursor: pointer;
+  }
+
+  /* Desktop-first: the baseline's @media (max-width: 768px) override,
+     baseline.html:705-726, mirrored with max-md: semantics. */
+  @media (max-width: 768px) {
+    .nav-links {
+      display: none;
+      position: absolute;
+      top: 64px;
+      left: 0;
+      right: 0;
+      flex-direction: column;
+      background: rgba(10, 14, 23, 0.97);
+      backdrop-filter: blur(20px);
+      padding: 1.5rem;
+      gap: 1rem;
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .nav-links.active {
+      display: flex;
+    }
+
+    .mobile-toggle {
+      display: block;
+    }
+  }
+</style>
+
+<script>
+  const toggle = document.getElementById('mobileToggle')!;
+  const navLinks = document.getElementById('navLinks')!;
+
+  toggle.addEventListener('click', () => {
+    navLinks.classList.toggle('active');
+    const expanded = toggle.getAttribute('aria-expanded') === 'true';
+    toggle.setAttribute('aria-expanded', String(!expanded));
+  });
+
+  navLinks.querySelectorAll('a').forEach((link) => {
+    link.addEventListener('click', () => {
+      navLinks.classList.remove('active');
+      toggle.setAttribute('aria-expanded', 'false');
+    });
+  });
+</script>

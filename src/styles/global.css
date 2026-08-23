@@ -24,27 +24,33 @@
   --font-mono: 'JetBrains Mono Variable', 'Fira Code', ui-monospace, monospace;
 }
 
-/* --- global reset and base, from baseline.html:61-105 --- */
-html {
-  scroll-behavior: smooth;
-}
+/* --- global reset and base, from baseline.html:61-105 ---
+   Layered as `base` (Tailwind's own layer order is theme, base, components,
+   utilities) so that a `text-*` utility on a link can still override the
+   `a` color below. An unlayered rule here would always beat any Tailwind
+   utility regardless of specificity, per the cascade-layers spec. */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
 
-body {
-  font-family: var(--font-sans);
-  background: var(--color-bg-primary);
-  color: var(--color-text-primary);
-  line-height: 1.6;
-  -webkit-font-smoothing: antialiased;
-}
+  body {
+    font-family: var(--font-sans);
+    background: var(--color-bg-primary);
+    color: var(--color-text-primary);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
 
-a {
-  color: var(--color-accent-light);
-  text-decoration: none;
-  transition: color 0.2s;
-}
+  a {
+    color: var(--color-accent-light);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
 
-a:hover {
-  color: #c4bbfa;
+  a:hover {
+    color: #c4bbfa;
+  }
 }
 
 /* --- rules with no utility equivalent --- */

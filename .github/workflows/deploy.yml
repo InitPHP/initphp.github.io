@@ -32,6 +32,8 @@ jobs:
       # Parity tests read dist/index.html, so they must run after the build.
       - run: npm test
 
+      - uses: actions/configure-pages@v5
+
       - uses: actions/upload-pages-artifact@v3
         with:
           path: ./dist

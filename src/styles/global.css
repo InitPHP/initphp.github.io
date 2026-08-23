@@ -1,4 +1,9 @@
-@import "tailwindcss";
+/* Scope Tailwind's automatic source scanning to src/ (this file lives at
+   src/styles/, so ../ resolves there). Without this, Tailwind also scans
+   docs/ — including the migration plan itself, whose prose contains
+   utility-shaped example class names — and emits dead classes for them
+   into the production stylesheet. Do not simplify back to a bare import. */
+@import "tailwindcss" source("../");
 
 @theme {
   --color-bg-primary: #0a0e17;

@@ -6,8 +6,13 @@ import { libraries } from '../data/libraries';
 <!--
   .hero, baseline.html:201-206. `position: relative` is already carried by
   the hero-glow utility (global.css), so it isn't repeated as a utility here.
+  The 768px padding override below is a real `@media (max-width: 768px)`
+  rule, not Tailwind's max-md: variant: max-md: compiles to
+  `(width < 768px)`, which excludes exactly 768px, while the baseline's
+  media query includes it (baseline.html:726-728). Matches the precedent
+  from Navbar/Stats/Footer/index.astro.
 -->
-<section class="hero-glow overflow-hidden px-6 pt-40 pb-24 text-center max-md:pt-32 max-md:pb-16">
+<section class="hero-glow overflow-hidden px-6 pt-40 pb-24 text-center">
   <!-- .hero-content, baseline.html:220-225 -->
   <div class="relative z-[1] mx-auto max-w-[780px]">
     <!-- .hero-badge, baseline.html:227-241 -->
@@ -107,6 +112,14 @@ import { libraries } from '../data/libraries';
     border-color: var(--color-accent);
     color: var(--color-text-primary);
     transform: translateY(-1px);
+  }
+
+  /* .hero max-width:768px override, baseline.html:726-728. */
+  @media (max-width: 768px) {
+    .hero-glow {
+      padding-top: 8rem;
+      padding-bottom: 4rem;
+    }
   }
 
   /* Desktop-first: baseline's @media (max-width: 480px), baseline.html:766-783. */

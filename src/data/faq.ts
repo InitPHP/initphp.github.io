@@ -13,8 +13,7 @@ export interface Faq {
 }
 
 const count = libraries.length;
-const oldest = 'PHP 5.6';
-const newest = 'PHP 8.2';
+const minimum = 'PHP 8.2';
 
 export const faqs: Faq[] = [
   {
@@ -31,7 +30,7 @@ export const faqs: Faq[] = [
   },
   {
     q: 'Which PHP versions does InitPHP support?',
-    a: `It depends on the package. The minimum ranges from ${oldest} for the smallest utility libraries up to ${newest} for the newest ones; most current releases target PHP 8.1 or later. The required version is listed on each library's page.`,
+    a: `Every current release requires ${minimum} or later and is tested on PHP 8.2 through 8.5. The exact Composer constraint is listed on each library's page.`,
   },
   {
     q: 'Can I use InitPHP libraries with Laravel, Symfony or CodeIgniter?',

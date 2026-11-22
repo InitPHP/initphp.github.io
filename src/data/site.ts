@@ -24,8 +24,8 @@ export const SITE = {
   sameAs: [
     'https://github.com/InitPHP',
     'https://packagist.org/packages/initphp/',
-    'https://www.linkedin.com/in/muhametsafak/',
-    'https://medium.com/@muhametsafak',
+    'https://www.linkedin.com/in/safakix',
+    'https://medium.com/@muhammetsafak',
   ],
 } as const;
 
